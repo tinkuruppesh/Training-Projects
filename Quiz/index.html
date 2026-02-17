@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Theme Toggle -->
+    <div class="theme-toggle">
+        <button id="themeBtn" onclick="toggleTheme()">🌙 Dark Mode</button>
+    </div>
+
+    <!-- Home Screen -->
+    <div id="homeScreen" class="screen active">
+        <div class="container">
+            <h1>📝 Quiz App</h1>
+            <div class="btn-group">
+                <button class="btn btn-primary" onclick="showScreen('facultyLogin')">Faculty Login</button>
+                <button class="btn btn-secondary" onclick="showScreen('studentEntry')">Student Entry</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Faculty Login -->
+    <div id="facultyLogin" class="screen">
+        <div class="container">
+            <h2>🔐 Faculty Login</h2>
+            <input type="password" id="facultyPassword" placeholder="Enter password" />
+            <button class="btn btn-primary" onclick="facultyLogin()">Login</button>
+            <button class="btn btn-secondary" onclick="showScreen('homeScreen')">Back</button>
+            <p class="hint">Hint: Password is "admin123"</p>
+        </div>
+    </div>
+
+    <!-- Faculty Panel -->
+    <div id="facultyPanel" class="screen">
+        <div class="container wide">
+            <h2>👨‍🏫 Faculty Panel</h2>
+            
+            <div class="panel-section">
+                <h3>Create Quiz</h3>
+                <div id="questionsContainer"></div>
+                <button class="btn btn-success" onclick="addQuestion()">+ Add Question</button>
+                <button class="btn btn-primary" onclick="saveQuiz()">Save Quiz</button>
+            </div>
+
+            <div class="panel-section">
+                <h3>Room Key</h3>
+                <div class="room-key-display">
+                    <span id="roomKeyDisplay">Not Generated</span>
+                    <button class="btn btn-primary" onclick="generateRoomKey()">Generate Key</button>
+                </div>
+            </div>
+
+            <div class="panel-section">
+                <h3>Quiz Control</h3>
+                <button class="btn btn-success" onclick="startQuiz()">Start Quiz</button>
+                <button class="btn btn-danger" onclick="stopQuiz()">Stop Quiz</button>
+                <button class="btn btn-secondary" onclick="viewLeaderboard()">View Leaderboard</button>
+            </div>
+
+            <button class="btn btn-secondary" onclick="logout()">Logout</button>
+        </div>
+    </div>
+
+    <!-- Student Entry -->
+    <div id="studentEntry" class="screen">
+        <div class="container">
+            <h2>🎓 Student Entry</h2>
+            <input type="text" id="studentName" placeholder="Enter your name" />
+            <input type="text" id="roomKey" placeholder="Enter room key" />
+            <button class="btn btn-primary" onclick="enterQuiz()">Enter Quiz</button>
+            <button class="btn btn-secondary" onclick="showScreen('homeScreen')">Back</button>
+        </div>
+    </div>
+
+    <!-- Quiz Screen -->
+    <div id="quizScreen" class="screen">
+        <div class="container wide">
+            <div class="quiz-header">
+                <div class="student-info">
+                    <span id="studentNameDisplay"></span>
+                </div>
+            </div>
+
+            <!-- Circular Timer -->
+            <div class="circular-timer">
+                <svg class="timer-svg" viewBox="0 0 100 100">
+                    <circle class="timer-circle-bg" cx="50" cy="50" r="45"></circle>
+                    <circle class="timer-circle" id="timerCircle" cx="50" cy="50" r="45"></circle>
+                </svg>
+                <div class="timer-text">
+                    <span id="timerDisplay">00:00</span>
+                </div>
+            </div>
+
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+
+            <div class="question-container">
+                <h3 id="questionText"></h3>
+                <div id="optionsContainer"></div>
+            </div>
+
+            <div class="quiz-nav">
+                <button class="btn btn-secondary" onclick="prevQuestion()">Previous</button>
+                <span id="questionCounter"></span>
+                <button class="btn btn-primary" onclick="nextQuestion()">Next</button>
+            </div>
+
+            <button class="btn btn-success" onclick="submitQuiz()">Submit Quiz</button>
+        </div>
+    </div>
+
+    <!-- Result Screen -->
+    <div id="resultScreen" class="screen">
+        <div class="container">
+            <h2>🎉 Quiz Results</h2>
+            <div class="result-card">
+                <div class="result-item">
+                    <span>Name:</span>
+                    <span id="resultName"></span>
+                </div>
+                <div class="result-item">
+                    <span>Score:</span>
+                    <span id="resultScore"></span>
+                </div>
+                <div class="result-item">
+                    <span>Percentage:</span>
+                    <span id="resultPercentage"></span>
+                </div>
+            </div>
+            <button class="btn btn-primary" onclick="showLeaderboard()">View Leaderboard</button>
+            <button class="btn btn-secondary" onclick="showScreen('homeScreen')">Home</button>
+        </div>
+    </div>
+
+    <!-- Leaderboard Screen -->
+    <div id="leaderboardScreen" class="screen">
+        <div class="container">
+            <h2>🏆 Leaderboard</h2>
+            <div id="leaderboardList"></div>
+            <button class="btn btn-secondary" onclick="showScreen('homeScreen')">Home</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
