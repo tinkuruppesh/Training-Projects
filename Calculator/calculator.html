@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scientific Calculator</title>
+    <link rel="stylesheet" href="calculator.css">
+</head>
+<body>
+    <div class="top-controls">
+        <button class="icon-btn" onclick="calculator.showHistory()" title="History">📜</button>
+        <button class="icon-btn" onclick="showConverter()" title="Unit Converter">🔄</button>
+        <button class="icon-btn" onclick="showShortcuts()" title="Shortcuts">⌨️</button>
+        <button class="icon-btn" onclick="toggleSound()" title="Sound">🔊</button>
+        <button class="icon-btn" onclick="toggleTheme()" title="Theme">🌓</button>
+    </div>
+    
+    <div class="calculator">
+        <div class="display">
+            <div class="memory-indicator" id="memoryIndicator"></div>
+            <div class="expression" id="expression"></div>
+            <div class="result" id="result">0</div>
+           
+        </div>
+        
+        <div class="buttons">
+            <button class="btn function" data-action="clear">AC</button>
+            <button class="btn function" data-action="delete">DEL</button>
+            <button class="btn memory" data-action="mc">MC</button>
+            <button class="btn memory" data-action="mr">MR</button>
+            
+            <button class="btn memory" data-action="m+">M+</button>
+            <button class="btn memory" data-action="m-">M-</button>
+            <button class="btn function" data-action="percent">%</button>
+            <button class="btn operator" data-value="/">÷</button>
+            
+            <button class="btn function" data-action="sin">sin</button>
+            <button class="btn function" data-action="cos">cos</button>
+            <button class="btn function" data-action="tan">tan</button>
+            <button class="btn operator" data-value="*">×</button>
+            
+            <button class="btn function" data-action="log">log</button>
+            <button class="btn function" data-action="ln">ln</button>
+            <button class="btn function" data-action="sqrt">√</button>
+            <button class="btn operator" data-value="-">−</button>
+            
+            <button class="btn function" data-action="pow">x²</button>
+            <button class="btn function" data-action="exp">eˣ</button>
+            <button class="btn function" data-action="pi">π</button>
+            <button class="btn operator" data-value="+">+</button>
+            
+            <button class="btn number" data-value="7">7</button>
+            <button class="btn number" data-value="8">8</button>
+            <button class="btn number" data-value="9">9</button>
+            <button class="btn function" data-value="(">(</button>
+            
+            <button class="btn number" data-value="4">4</button>
+            <button class="btn number" data-value="5">5</button>
+            <button class="btn number" data-value="6">6</button>
+            <button class="btn function" data-value=")">)</button>
+            
+            <button class="btn number" data-value="1">1</button>
+            <button class="btn number" data-value="2">2</button>
+            <button class="btn number" data-value="3">3</button>
+            <button class="btn function" data-action="factorial">n!</button>
+            
+            <button class="btn number" data-value="0" style="grid-column: span 2;">0</button>
+            <button class="btn number" data-value=".">.</button>
+            <button class="btn equals" data-action="equals">=</button>
+        </div>
+    </div>
+
+    <div id="historyPanel" class="side-panel hidden">
+        <button class="panel-close" onclick="closeHistory()" title="Close">×</button>
+        <div class="history-header">
+            <h3>History</h3>
+        </div>
+        <input type="text" id="historySearch" class="history-search" placeholder="🔍 Search history..." oninput="calculator.searchHistory()">
+        <div id="historyList" class="history-list"></div>
+        <div class="history-actions">
+            <button class="btn function" onclick="exportHistory()">📤 Export</button>
+            <button class="btn function" onclick="importHistory()">📥 Import</button>
+            <button class="btn function" onclick="clearHistory()">🗑️ Clear</button>
+        </div>
+    </div>
+
+    <div id="converterPanel" class="side-panel hidden">
+        <button class="panel-close" onclick="closeConverter()" title="Close">×</button>
+        <div class="history-header">
+            <h3>Unit Converter</h3>
+        </div>
+        <select id="converterType" onchange="updateConverterUnits()">
+            <option value="length">Length</option>
+            <option value="weight">Weight</option>
+            <option value="temperature">Temperature</option>
+        </select>
+        <div class="converter-inputs">
+            <div>
+                <input type="number" id="fromValue" oninput="convert()" placeholder="0">
+                <select id="fromUnit"></select>
+            </div>
+            <div class="converter-arrow">→</div>
+            <div>
+                <input type="number" id="toValue" readonly placeholder="0">
+                <select id="toUnit" onchange="convert()"></select>
+            </div>
+        </div>
+    </div>
+
+    <div id="shortcutsPanel" class="side-panel hidden">
+        <button class="panel-close" onclick="closeShortcuts()" title="Close">×</button>
+        <div class="history-header">
+            <h3>Keyboard Shortcuts</h3>
+        </div>
+        <div class="shortcuts-list">
+            <div class="shortcut-item"><kbd>0-9</kbd> Numbers</div>
+            <div class="shortcut-item"><kbd>+ - * /</kbd> Operators</div>
+            <div class="shortcut-item"><kbd>Enter</kbd> Calculate</div>
+            <div class="shortcut-item"><kbd>Escape</kbd> Clear</div>
+            <div class="shortcut-item"><kbd>Backspace</kbd> Delete</div>
+            <div class="shortcut-item"><kbd>Ctrl+C</kbd> Copy Result</div>
+            <div class="shortcut-item"><kbd>Ctrl+H</kbd> History</div>
+        </div>
+    </div>
+
+    <input type="file" id="importFile" accept=".json" style="display:none" onchange="handleImport(event)">
+    
+    <script src="calculator.js"></script>
+</body>
+</html>

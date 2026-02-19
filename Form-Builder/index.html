@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FormCraft - Advanced Form Builder</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-left">
+            <div class="logo">
+                <span class="logo-icon">📝</span>
+                <h1>FormCraft</h1>
+            </div>
+            <input type="text" id="formName" class="form-name-input" value="Untitled Form" onchange="saveFormName()">
+        </div>
+        <div class="nav-right">
+            <button class="nav-btn" onclick="previewForm()">👁️ Preview</button>
+            <button class="nav-btn" onclick="exportForm()">💾 Export</button>
+            <button class="nav-btn" onclick="clearForm()">🗑️ Clear</button>
+            <button class="nav-btn" onclick="toggleTheme()">🌓</button>
+        </div>
+    </nav>
+
+    <div class="builder-container">
+        <aside class="fields-panel">
+            <div class="panel-header">
+                <h3>📦 Field Types</h3>
+                <button class="collapse-btn" onclick="toggleFieldsPanel()">←</button>
+            </div>
+            <div class="search-fields">
+                <input type="text" id="fieldSearch" placeholder="🔍 Search fields..." oninput="searchFields()">
+            </div>
+            <div class="fields-list" id="fieldsList">
+                <div class="field-item" draggable="true" data-type="text" onclick="addFieldByClick('text')">
+                    <span class="field-icon">📝</span>
+                    <div class="field-info">
+                        <span class="field-name">Text Input</span>
+                        <span class="field-desc">Single line text</span>
+                    </div>
+                    <span class="add-icon">+</span>
+                </div>
+                <div class="field-item" draggable="true" data-type="email" onclick="addFieldByClick('email')">
+                    <span class="field-icon">📧</span>
+                    <div class="field-info">
+                        <span class="field-name">Email</span>
+                        <span class="field-desc">Email validation</span>
+                    </div>
+                    <span class="add-icon">+</span>
+                </div>
+                <div class="field-item" draggable="true" data-type="number" onclick="addFieldByClick('number')">
+                    <span class="field-icon">🔢</span>
+                    <div class="field-info">
+                        <span class="field-name">Number</span>
+                        <span class="field-desc">Numeric input</span>
+                    </div>
+                    <span class="add-icon">+</span>
+                </div>
+                <div class="field-item" draggable="true" data-type="tel" onclick="addFieldByClick('tel')">
+                    <span class="field-icon">📱</span>
+                    <div class="field-info">
+                        <span class="field-name">Phone</span>
+                        <span class="field-desc">Phone number</span>
+                    </div>
+                    <span class="add-icon">+</span>
+                </div>
+                <div class="field-item" draggable="true" data-type="textarea" onclick="addFieldByClick('textarea')">
+                    <span class="field-icon">📄</span>
+                    <div class="field-info">
+                        <span class="field-name">Text Area</span>
+                        <span class="field-desc">Multi-line text</span>
+                    </div>
+                    <span class="add-icon">+</span>
+                </div>
+                <div class="field-item" draggable="true" data-type="select" onclick="addFieldByClick('select')">
+                    <span class="field-icon">📋</span>
+                    <div class="field-info">
+                        <span class="field-name">Dropdown</span>
+                        <span class="field-desc">Select options</span>
+                    </div>
+                    <span class="add-icon">+</span>
+                </div>
+                <div class="field-item" draggable="true" data-type="radio" onclick="addFieldByClick('radio')">
+                    <span class="field-icon">🔘</span>
+                    <div class="field-info">
+                        <span class="field-name">Radio Group</span>
+                        <span class="field-desc">Single choice</span>
+                    </div>
+                    <span class="add-icon">+</span>
+                </div>
+                <div class="field-item" draggable="true" data-type="checkbox" onclick="addFieldByClick('checkbox')">
+                    <span class="field-icon">☑️</span>
+                    <div class="field-info">
+                        <span class="field-name">Checkbox</span>
+                        <span class="field-desc">Yes/No option</span>
+                    </div>
+                    <span class="add-icon">+</span>
+                </div>
+                <div class="field-item" draggable="true" data-type="date" onclick="addFieldByClick('date')">
+                    <span class="field-icon">📅</span>
+                    <div class="field-info">
+                        <span class="field-name">Date Picker</span>
+                        <span class="field-desc">Select date</span>
+                    </div>
+                    <span class="add-icon">+</span>
+                </div>
+                <div class="field-item" draggable="true" data-type="file" onclick="addFieldByClick('file')">
+                    <span class="field-icon">📎</span>
+                    <div class="field-info">
+                        <span class="field-name">File Upload</span>
+                        <span class="field-desc">Upload files</span>
+                    </div>
+                    <span class="add-icon">+</span>
+                </div>
+            </div>
+        </aside>
+
+        <main class="canvas-area">
+            <div class="canvas-header">
+                <h2>Form Canvas</h2>
+                <span class="field-count">0 fields</span>
+            </div>
+            <div class="form-canvas" id="formCanvas">
+                <div class="empty-state">
+                    <span class="empty-icon">📝</span>
+                    <h3>Start Building Your Form</h3>
+                    <p>Drag and drop fields from the left panel</p>
+                </div>
+            </div>
+        </main>
+
+        <aside class="properties-panel" id="propertiesPanel">
+            <div class="panel-header">
+                <h3>⚙️ Properties</h3>
+            </div>
+            <div class="properties-content" id="propertiesContent">
+                <div class="no-selection">
+                    <span>🎯</span>
+                    <p>Select a field to edit properties</p>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <div class="modal" id="previewModal">
+        <div class="modal-overlay" onclick="closePreview()"></div>
+        <div class="modal-content preview-modal">
+            <button class="modal-close" onclick="closePreview()">×</button>
+            <div class="modal-body">
+                <h2>Form Preview</h2>
+                <div id="previewContent"></div>
+                <button class="btn-primary" onclick="testSubmit()">Test Submit</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskFlow - Kanban Board</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-left">
+            <div class="logo">
+                <span class="logo-icon">📋</span>
+                <h1>TaskFlow</h1>
+            </div>
+            <input type="text" id="boardTitle" class="board-title-input" value="My Project Board" onchange="saveBoardTitle()">
+        </div>
+        <div class="nav-right">
+            <button class="nav-btn" onclick="showStats()">📊 Stats</button>
+            <button class="nav-btn" onclick="showFilters()">🔍 Filter</button>
+            <button class="nav-btn" onclick="exportBoard()">📥 Export</button>
+            <button class="nav-btn" onclick="toggleTheme()">🌓</button>
+        </div>
+    </nav>
+
+    <div class="board-container">
+        <div class="columns-wrapper" id="columnsWrapper"></div>
+        <button class="add-column-btn" onclick="showAddColumnModal()">
+            <span>+</span>
+            <span>Add Column</span>
+        </button>
+    </div>
+
+    <div class="modal" id="cardModal">
+        <div class="modal-overlay" onclick="closeCardModal()"></div>
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeCardModal()">×</button>
+            <div class="modal-body">
+                <input type="text" id="cardTitle" class="card-title-input" placeholder="Card title...">
+                
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="cardDescription" placeholder="Add description..." rows="4"></textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Priority</label>
+                        <select id="cardPriority">
+                            <option value="low">🟢 Low</option>
+                            <option value="medium">🟡 Medium</option>
+                            <option value="high">🔴 High</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Due Date</label>
+                        <input type="date" id="cardDueDate">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Tags</label>
+                    <div class="tags-input">
+                        <div id="selectedTags" class="selected-tags"></div>
+                        <input type="text" id="tagInput" placeholder="Add tag..." onkeypress="handleTagInput(event)">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Assignee</label>
+                    <input type="text" id="cardAssignee" placeholder="Assign to...">
+                </div>
+
+                <div class="form-group">
+                    <label>Checklist</label>
+                    <div id="checklistItems"></div>
+                    <button class="btn-secondary" onclick="addChecklistItem()">+ Add Item</button>
+                </div>
+
+                <div class="modal-actions">
+                    <button class="btn-primary" onclick="saveCard()">Save Card</button>
+                    <button class="btn-secondary" onclick="closeCardModal()">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal small-modal" id="columnModal">
+        <div class="modal-overlay" onclick="closeColumnModal()"></div>
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeColumnModal()">×</button>
+            <div class="modal-body">
+                <h3>Add New Column</h3>
+                <input type="text" id="columnName" class="input-field" placeholder="Column name...">
+                <div class="modal-actions">
+                    <button class="btn-primary" onclick="addColumn()">Add Column</button>
+                    <button class="btn-secondary" onclick="closeColumnModal()">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="side-panel" id="statsPanel">
+        <button class="panel-close" onclick="closeStats()">×</button>
+        <div class="panel-header">
+            <h3>📊 Board Statistics</h3>
+        </div>
+        <div class="panel-content" id="statsContent"></div>
+    </div>
+
+    <div class="side-panel" id="filterPanel">
+        <button class="panel-close" onclick="closeFilters()">×</button>
+        <div class="panel-header">
+            <h3>🔍 Filter Tasks</h3>
+        </div>
+        <div class="panel-content">
+            <div class="filter-group">
+                <label>Priority</label>
+                <div class="filter-options">
+                    <label><input type="checkbox" value="low" onchange="applyFilters()"> Low</label>
+                    <label><input type="checkbox" value="medium" onchange="applyFilters()"> Medium</label>
+                    <label><input type="checkbox" value="high" onchange="applyFilters()"> High</label>
+                </div>
+            </div>
+            <div class="filter-group">
+                <label>Search</label>
+                <input type="text" id="searchFilter" class="input-field" placeholder="Search tasks..." oninput="applyFilters()">
+            </div>
+            <button class="btn-secondary" onclick="clearFilters()">Clear Filters</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

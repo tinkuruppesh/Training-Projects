@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Price Tracker</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <h1>₿ CryptoTracker</h1>
+                <span class="last-update">Last updated: <span id="lastUpdate">--</span></span>
+            </div>
+            <div class="header-right">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Search crypto..." />
+                    <span class="search-icon">🔍</span>
+                </div>
+                <button class="intensity-btn" onclick="toggleIntensity()">💡</button>
+            </div>
+        </header>
+
+        <!-- Top Movers -->
+        <section class="top-movers">
+            <div class="mover-card">
+                <h3>🔥 Top Gainer</h3>
+                <div id="topGainer" class="mover-content">Loading...</div>
+            </div>
+            <div class="mover-card">
+                <h3>📉 Top Loser</h3>
+                <div id="topLoser" class="mover-content">Loading...</div>
+            </div>
+        </section>
+
+        <!-- Main Content -->
+        <div class="main-grid">
+            <!-- Crypto List -->
+            <section class="crypto-list">
+                <div class="section-header">
+                    <h2>Live Prices</h2>
+                    <button class="refresh-btn" onclick="fetchCryptoData()">🔄</button>
+                </div>
+                <div id="cryptoGrid" class="crypto-grid">
+                    <!-- Loading skeletons -->
+                    <div class="skeleton-card"></div>
+                    <div class="skeleton-card"></div>
+                    <div class="skeleton-card"></div>
+                </div>
+            </section>
+
+            <!-- Chart Section -->
+            <section class="chart-section">
+                <div class="section-header">
+                    <h2 id="chartTitle">Select a coin</h2>
+                    <div class="time-filters">
+                        <button class="time-btn active" data-time="1">1H</button>
+                        <button class="time-btn" data-time="24">24H</button>
+                        <button class="time-btn" data-time="168">7D</button>
+                        <button class="fullscreen-btn" onclick="toggleFullscreen()">⛶</button>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="priceChart"></canvas>
+                </div>
+                <div class="trend-indicators">
+                    <div class="indicator">
+                        <span>Moving Avg</span>
+                        <span id="movingAvg">--</span>
+                    </div>
+                    <div class="indicator">
+                        <span>Trend</span>
+                        <span id="trendIndicator">--</span>
+                    </div>
+                    <div class="indicator">
+                        <span>Momentum</span>
+                        <div class="momentum-bar">
+                            <div id="momentumFill" class="momentum-fill"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Watchlist & Portfolio -->
+        <div class="bottom-grid">
+            <section class="watchlist-section">
+                <div class="section-header">
+                    <h2>⭐ Watchlist</h2>
+                    <span id="watchlistCount">0</span>
+                </div>
+                <div id="watchlistGrid" class="watchlist-grid">
+                    <p class="empty-state">Add coins to your watchlist</p>
+                </div>
+            </section>
+
+            <section class="portfolio-section">
+                <div class="section-header">
+                    <h2>💼 Portfolio</h2>
+                    <button class="add-btn" onclick="openPortfolioModal()">+</button>
+                </div>
+                <div class="portfolio-value">
+                    <span>Total Value</span>
+                    <h3 id="portfolioTotal">$0.00</h3>
+                </div>
+                <div id="portfolioList" class="portfolio-list"></div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Portfolio Modal -->
+    <div class="modal" id="portfolioModal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closePortfolioModal()">&times;</span>
+            <h2>Add to Portfolio</h2>
+            <form onsubmit="addToPortfolio(event)">
+                <select id="coinSelect" required></select>
+                <input type="number" id="amountInput" placeholder="Amount" step="0.00000001" required>
+                <button type="submit">Add</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Alert Modal -->
+    <div class="alert-popup" id="alertPopup"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

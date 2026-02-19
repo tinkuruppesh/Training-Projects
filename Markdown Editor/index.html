@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inkwell — Markdown Editor</title>
+
+  <!-- Fonts: Playfair Display (display) + DM Mono (code) + DM Sans (ui) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:ital,wght@0,400;0,500;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet" />
+
+  <!-- Marked.js — Markdown parser -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <!-- highlight.js — Syntax highlighting -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/base16/solarized-light.min.css" id="hljs-theme" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/base16/solarized-dark.min.css" id="hljs-theme-dark" disabled />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <!-- html2pdf — PDF export -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════
+       TOP BAR
+  ═══════════════════════════════════ -->
+  <header class="topbar" id="topbar">
+    <div class="topbar-left">
+      <div class="logo">
+        <span class="logo-icon">✦</span>
+        <span class="logo-text">Inkwell</span>
+      </div>
+      <div class="doc-title-wrap">
+        <input class="doc-title" id="docTitle" type="text" value="Untitled Document" spellcheck="false" />
+      </div>
+    </div>
+
+    <nav class="topbar-center" role="toolbar" aria-label="View mode">
+      <!-- View mode buttons -->
+      <button class="view-btn active" data-mode="both" title="Split View">
+        <svg width="16" height="16" viewBox="0 0 16 16"><rect x="1" y="2" width="6" height="12" rx="1"/><rect x="9" y="2" width="6" height="12" rx="1"/></svg>
+        <span>Split</span>
+      </button>
+      <button class="view-btn" data-mode="editor" title="Editor Only">
+        <svg width="16" height="16" viewBox="0 0 16 16"><path d="M2 4h9M2 7h7M2 10h9M2 13h5"/><circle cx="13" cy="4" r="1.5"/></svg>
+        <span>Write</span>
+      </button>
+      <button class="view-btn" data-mode="preview" title="Preview Only">
+        <svg width="16" height="16" viewBox="0 0 16 16"><path d="M1 8s3-5 7-5 7 5 7 5-3 5-7 5-7-5-7-5z"/><circle cx="8" cy="8" r="2"/></svg>
+        <span>Preview</span>
+      </button>
+    </nav>
+
+    <div class="topbar-right">
+      <!-- Theme toggle -->
+      <button class="icon-btn theme-toggle" id="themeToggle" title="Toggle dark/light theme" aria-label="Toggle theme">
+        <span class="theme-icon sun">☀</span>
+        <span class="theme-icon moon">☽</span>
+      </button>
+      <!-- Fullscreen -->
+      <button class="icon-btn" id="fullscreenBtn" title="Fullscreen writing mode" aria-label="Fullscreen">
+        <svg width="16" height="16" viewBox="0 0 16 16"><path d="M1 1h4M1 1v4M11 1h4M15 1v4M1 15h4M1 15v-4M15 15h-4M15 15v-4"/></svg>
+      </button>
+      <!-- Open file -->
+      <button class="icon-btn" id="openFileBtn" title="Open .md file" aria-label="Open file">
+        <svg width="16" height="16" viewBox="0 0 16 16"><path d="M2 13V3a1 1 0 011-1h4l2 2h5a1 1 0 011 1v8a1 1 0 01-1 1H3a1 1 0 01-1-1z"/></svg>
+      </button>
+      <input type="file" id="fileInput" accept=".md,.txt" style="display:none" />
+      <!-- Download menu -->
+      <div class="dropdown" id="downloadMenu">
+        <button class="btn-primary" id="downloadBtn">
+          Export
+          <svg width="12" height="12" viewBox="0 0 12 12"><path d="M6 1v7M3 5l3 3 3-3M1 10h10"/></svg>
+        </button>
+        <div class="dropdown-panel">
+          <button class="dropdown-item" id="downloadMd">
+            <span>Download .md</span>
+            <kbd>.md</kbd>
+          </button>
+          <button class="dropdown-item" id="downloadPdf">
+            <span>Export PDF</span>
+            <kbd>.pdf</kbd>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════
+       TOOLBAR
+  ═══════════════════════════════════ -->
+  <div class="toolbar" id="toolbar" role="toolbar" aria-label="Formatting">
+    <div class="toolbar-group">
+      <button class="tool-btn" data-action="h1" title="Heading 1"><b>H1</b></button>
+      <button class="tool-btn" data-action="h2" title="Heading 2"><b>H2</b></button>
+      <button class="tool-btn" data-action="h3" title="Heading 3"><b>H3</b></button>
+    </div>
+    <div class="toolbar-sep"></div>
+    <div class="toolbar-group">
+      <button class="tool-btn" data-action="bold" title="Bold (Ctrl+B)"><b>B</b></button>
+      <button class="tool-btn" data-action="italic" title="Italic (Ctrl+I)"><i>I</i></button>
+      <button class="tool-btn" data-action="strikethrough" title="Strikethrough"><s>S</s></button>
+    </div>
+    <div class="toolbar-sep"></div>
+    <div class="toolbar-group">
+      <button class="tool-btn" data-action="ul" title="Bullet list">≡</button>
+      <button class="tool-btn" data-action="ol" title="Numbered list">1.</button>
+      <button class="tool-btn" data-action="blockquote" title="Blockquote">❝</button>
+      <button class="tool-btn" data-action="hr" title="Horizontal rule">—</button>
+    </div>
+    <div class="toolbar-sep"></div>
+    <div class="toolbar-group">
+      <button class="tool-btn" data-action="code" title="Inline code">`c`</button>
+      <button class="tool-btn" data-action="codeblock" title="Code block">{ }</button>
+      <button class="tool-btn" data-action="link" title="Insert link">🔗</button>
+      <button class="tool-btn" data-action="image" title="Insert image">🖼</button>
+      <button class="tool-btn" data-action="table" title="Insert table">⊞</button>
+    </div>
+    <div class="toolbar-sep"></div>
+    <div class="toolbar-group">
+      <button class="tool-btn" data-action="undo" title="Undo (Ctrl+Z)">↩</button>
+      <button class="tool-btn" data-action="redo" title="Redo (Ctrl+Y)">↪</button>
+    </div>
+
+    <!-- Stats — pushed right -->
+    <div class="toolbar-stats" id="stats">
+      <span id="wordCount">0 words</span>
+      <span class="stat-sep">·</span>
+      <span id="charCount">0 chars</span>
+      <span class="stat-sep">·</span>
+      <span id="readTime">~0 min read</span>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════
+       MAIN WORKSPACE
+  ═══════════════════════════════════ -->
+  <main class="workspace" id="workspace" data-mode="both">
+
+    <!-- Editor pane -->
+    <section class="pane editor-pane" id="editorPane">
+      <div class="pane-label">EDITOR</div>
+      <textarea
+        id="editor"
+        class="editor"
+        spellcheck="true"
+        placeholder="Begin writing…"
+        aria-label="Markdown editor"
+      ></textarea>
+    </section>
+
+    <!-- Resize handle -->
+    <div class="resize-handle" id="resizeHandle" title="Drag to resize"></div>
+
+    <!-- Preview pane -->
+    <section class="pane preview-pane" id="previewPane">
+      <div class="pane-label">PREVIEW</div>
+      <article id="preview" class="preview"></article>
+    </section>
+
+  </main>
+
+  <!-- ═══════════════════════════════════
+       FULLSCREEN OVERLAY
+  ═══════════════════════════════════ -->
+  <div class="fullscreen-overlay" id="fullscreenOverlay" hidden>
+    <button class="fullscreen-exit" id="fullscreenExit" title="Exit fullscreen">✕</button>
+    <div class="fs-doc-title" id="fsDocTitle"></div>
+    <textarea
+      id="fsEditor"
+      class="fs-editor"
+      spellcheck="true"
+      placeholder="Begin writing…"
+      aria-label="Fullscreen markdown editor"
+    ></textarea>
+    <div class="fs-stats" id="fsStats"></div>
+  </div>
+
+  <!-- ═══════════════════════════════════
+       TOAST NOTIFICATIONS
+  ═══════════════════════════════════ -->
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+  <!-- Autosave indicator -->
+  <div class="autosave-badge" id="autosaveBadge">
+    <span class="autosave-dot"></span>
+    Saved
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

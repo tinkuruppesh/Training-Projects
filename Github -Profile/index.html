@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GitScope — GitHub Profile Finder</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- Google Fonts: Syne (display) + DM Sans (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header class="site-header">
+    <div class="logo">
+      <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <span>Git<strong>Scope</strong></span>
+    </div>
+
+    <!-- Theme toggle -->
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+      <span class="toggle-track">
+        <span class="toggle-thumb"></span>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+          <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </span>
+    </button>
+  </header>
+
+  <!-- ===== HERO / SEARCH ===== -->
+  <section class="hero">
+    <h1 class="hero-title">Explore GitHub<br /><em>Profiles</em></h1>
+    <p class="hero-sub">Search any GitHub username to reveal their story.</p>
+
+    <div class="search-wrap">
+      <div class="search-box" id="searchBox">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Enter a GitHub username…"
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <button class="search-btn" id="searchBtn" aria-label="Search">
+          <span>Search</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Auto-suggest dropdown -->
+      <ul class="suggest-list" id="suggestList"></ul>
+    </div>
+
+    <!-- Recent searches -->
+    <div class="recent-wrap" id="recentWrap" hidden>
+      <span class="recent-label">Recent</span>
+      <div class="recent-chips" id="recentChips"></div>
+      <button class="clear-history" id="clearHistory">Clear</button>
+    </div>
+  </section>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <main class="content" id="mainContent">
+
+    <!-- Loading skeleton -->
+    <div class="skeleton-wrap" id="skeletonWrap" hidden>
+      <div class="skeleton-profile">
+        <div class="skel skel-avatar"></div>
+        <div class="skel-info">
+          <div class="skel skel-name"></div>
+          <div class="skel skel-bio"></div>
+          <div class="skel skel-bio short"></div>
+        </div>
+      </div>
+      <div class="skel-stats">
+        <div class="skel skel-stat"></div>
+        <div class="skel skel-stat"></div>
+        <div class="skel skel-stat"></div>
+      </div>
+      <div class="skel-repos">
+        <div class="skel skel-repo"></div>
+        <div class="skel skel-repo"></div>
+        <div class="skel skel-repo"></div>
+        <div class="skel skel-repo"></div>
+        <div class="skel skel-repo"></div>
+      </div>
+    </div>
+
+    <!-- Error state -->
+    <div class="error-card" id="errorCard" hidden>
+      <div class="error-emoji">🔍</div>
+      <h2 class="error-title">User not found</h2>
+      <p class="error-msg" id="errorMsg">We couldn't find that GitHub username. Please check and try again.</p>
+    </div>
+
+    <!-- Profile result -->
+    <div class="profile-wrap" id="profileWrap" hidden>
+
+      <!-- Profile header card -->
+      <div class="profile-card glass">
+        <div class="profile-header">
+          <div class="avatar-ring">
+            <img id="avatar" src="" alt="Avatar" class="avatar" />
+          </div>
+          <div class="profile-meta">
+            <h2 class="profile-name" id="profileName"></h2>
+            <a class="profile-login" id="profileLogin" href="#" target="_blank" rel="noopener"></a>
+            <p class="profile-bio" id="profileBio"></p>
+            <div class="profile-details" id="profileDetails"></div>
+          </div>
+          <div class="profile-actions">
+            <a class="btn btn-primary" id="visitBtn" href="#" target="_blank" rel="noopener">
+              View on GitHub
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </a>
+            <button class="btn btn-ghost" id="copyBtn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              <span id="copyBtnText">Copy Link</span>
+            </button>
+            <button class="btn btn-ghost" id="downloadBtn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Save PDF
+            </button>
+          </div>
+        </div>
+
+        <!-- Stats row -->
+        <div class="stats-row" id="statsRow"></div>
+      </div>
+
+      <!-- Language usage -->
+      <section class="section" id="langSection">
+        <h3 class="section-title">Language Usage</h3>
+        <div class="lang-bars" id="langBars"></div>
+      </section>
+
+      <!-- Top repos -->
+      <section class="section" id="reposSection">
+        <h3 class="section-title">Top Repositories</h3>
+        <div class="repos-grid" id="reposGrid"></div>
+      </section>
+
+      <!-- Activity summary -->
+      <section class="section" id="activitySection">
+        <h3 class="section-title">Activity Pulse</h3>
+        <div class="activity-grid" id="activityGrid"></div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- PDF hidden clone -->
+  <div id="pdfClone" style="position:absolute;left:-9999px;top:0;width:700px;"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>

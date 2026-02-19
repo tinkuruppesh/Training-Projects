@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NoteMaster - Smart Notes App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h1>📝 NoteMaster</h1>
+            <button class="btn-new" onclick="createNewNote()">+ New Note</button>
+        </div>
+
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="🔍 Search notes..." oninput="searchNotes()">
+        </div>
+
+        <div class="filter-tabs">
+            <button class="tab active" onclick="filterNotes('all')">All</button>
+            <button class="tab" onclick="filterNotes('favorites')">⭐ Favorites</button>
+            <button class="tab" onclick="filterNotes('archived')">📦 Archived</button>
+        </div>
+
+        <div class="notes-list" id="notesList"></div>
+
+        <div class="sidebar-footer">
+            <div class="stats">
+                <span id="noteCount">0 notes</span>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Editor -->
+    <main class="main-editor">
+        <div class="editor-header">
+            <input type="text" id="noteTitle" placeholder="Untitled Note" class="note-title">
+            
+            <div class="editor-actions">
+                <button class="icon-btn" onclick="toggleFavorite()" title="Favorite">
+                    <span id="favoriteIcon">☆</span>
+                </button>
+                <button class="icon-btn" onclick="toggleArchive()" title="Archive">
+                    📦
+                </button>
+                <button class="icon-btn" onclick="exportNote()" title="Export">
+                    📥
+                </button>
+                <button class="icon-btn" onclick="deleteNote()" title="Delete">
+                    🗑️
+                </button>
+            </div>
+        </div>
+
+        <div class="toolbar">
+            <button onclick="formatText('bold')" title="Bold"><b>B</b></button>
+            <button onclick="formatText('italic')" title="Italic"><i>I</i></button>
+            <button onclick="formatText('underline')" title="Underline"><u>U</u></button>
+            <button onclick="formatText('strikeThrough')" title="Strike"><s>S</s></button>
+            <span class="divider"></span>
+            <button onclick="formatText('insertUnorderedList')" title="Bullet List">• List</button>
+            <button onclick="formatText('insertOrderedList')" title="Numbered List">1. List</button>
+            <span class="divider"></span>
+            <select onchange="formatText('fontSize', this.value); this.value=''">
+                <option value="">Size</option>
+                <option value="1">Small</option>
+                <option value="3">Normal</option>
+                <option value="5">Large</option>
+                <option value="7">Huge</option>
+            </select>
+            <input type="color" id="textColor" onchange="formatText('foreColor', this.value)" title="Text Color">
+            <input type="color" id="bgColor" onchange="formatText('hiliteColor', this.value)" title="Highlight">
+        </div>
+
+        <div class="editor-content" id="editor" contenteditable="true" placeholder="Start typing your note..."></div>
+
+        <div class="editor-footer">
+            <div class="tags-section">
+                <input type="text" id="tagInput" placeholder="Add tags (press Enter)" onkeypress="addTag(event)">
+                <div class="tags-list" id="tagsList"></div>
+            </div>
+
+            <div class="color-picker">
+                <span>Note Color:</span>
+                <div class="color-options">
+                    <div class="color-dot" style="background:#fff" onclick="setNoteColor('#fff')"></div>
+                    <div class="color-dot" style="background:#ffe4e1" onclick="setNoteColor('#ffe4e1')"></div>
+                    <div class="color-dot" style="background:#e1f5ff" onclick="setNoteColor('#e1f5ff')"></div>
+                    <div class="color-dot" style="background:#e8f5e9" onclick="setNoteColor('#e8f5e9')"></div>
+                    <div class="color-dot" style="background:#fff9c4" onclick="setNoteColor('#fff9c4')"></div>
+                    <div class="color-dot" style="background:#f3e5f5" onclick="setNoteColor('#f3e5f5')"></div>
+                </div>
+            </div>
+
+            <div class="meta-info">
+                <span id="wordCount">0 words</span>
+                <span id="lastSaved">Not saved</span>
+            </div>
+        </div>
+    </main>
+
+    <!-- Empty State -->
+    <div class="empty-state" id="emptyState">
+        <div class="empty-content">
+            <span class="empty-icon">📝</span>
+            <h2>No Note Selected</h2>
+            <p>Create a new note or select one from the sidebar</p>
+            <button class="btn-primary" onclick="createNewNote()">Create New Note</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

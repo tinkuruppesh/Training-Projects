@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Admin Dashboard</title>
+    <link rel="stylesheet" href="auth.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-left">
+            <div class="auth-content">
+                <h1>📊 Admin Dashboard</h1>
+                <p>Manage your business with powerful analytics and insights</p>
+                <div class="features">
+                    <div class="feature">✅ Real-time Analytics</div>
+                    <div class="feature">✅ Secure Authentication</div>
+                    <div class="feature">✅ Advanced Reporting</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="auth-right">
+            <div class="form-container">
+                <!-- Login Form -->
+                <div class="form-box" id="loginForm">
+                    <h2>Welcome Back</h2>
+                    <p class="subtitle">Sign in to your account</p>
+                    
+                    <form onsubmit="handleLogin(event)">
+                        <div class="input-group">
+                            <input type="email" id="loginEmail" required>
+                            <label>Email Address</label>
+                            <span class="error" id="loginEmailError"></span>
+                        </div>
+                        
+                        <div class="input-group">
+                            <input type="password" id="loginPassword" required>
+                            <label>Password</label>
+                            <span class="toggle-password" onclick="togglePassword('loginPassword')">👁️</span>
+                            <span class="error" id="loginPasswordError"></span>
+                        </div>
+                        
+                        <div class="form-options">
+                            <label class="checkbox">
+                                <input type="checkbox" id="rememberMe">
+                                <span>Remember me</span>
+                            </label>
+                            <a href="#" class="link">Forgot password?</a>
+                        </div>
+                        
+                        <button type="submit" class="btn-primary">Sign In</button>
+                    </form>
+                    
+                    <div class="form-footer">
+                        Don't have an account? <a href="#" onclick="showRegister()">Sign up</a>
+                    </div>
+                </div>
+                
+                <!-- Register Form -->
+                <div class="form-box hidden" id="registerForm">
+                    <h2>Create Account</h2>
+                    <p class="subtitle">Join us today</p>
+                    
+                    <form onsubmit="handleRegister(event)">
+                        <div class="input-group">
+                            <input type="text" id="registerName" required>
+                            <label>Full Name</label>
+                            <span class="error" id="registerNameError"></span>
+                        </div>
+                        
+                        <div class="input-group">
+                            <input type="email" id="registerEmail" required>
+                            <label>Email Address</label>
+                            <span class="error" id="registerEmailError"></span>
+                        </div>
+                        
+                        <div class="input-group">
+                            <input type="password" id="registerPassword" required>
+                            <label>Password</label>
+                            <span class="toggle-password" onclick="togglePassword('registerPassword')">👁️</span>
+                            <span class="error" id="registerPasswordError"></span>
+                            <div class="password-strength" id="passwordStrength"></div>
+                        </div>
+                        
+                        <div class="input-group">
+                            <input type="password" id="confirmPassword" required>
+                            <label>Confirm Password</label>
+                            <span class="toggle-password" onclick="togglePassword('confirmPassword')">👁️</span>
+                            <span class="error" id="confirmPasswordError"></span>
+                        </div>
+                        
+                        <label class="checkbox">
+                            <input type="checkbox" id="agreeTerms" required>
+                            <span>I agree to the <a href="#" class="link">Terms & Conditions</a></span>
+                        </label>
+                        
+                        <button type="submit" class="btn-primary">Create Account</button>
+                    </form>
+                    
+                    <div class="form-footer">
+                        Already have an account? <a href="#" onclick="showLogin()">Sign in</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="auth.js"></script>
+</body>
+</html>

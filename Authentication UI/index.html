@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <aside class="sidebar" id="sidebar">
+        <div class="logo">
+            <span class="logo-icon">📊</span>
+            <span class="logo-text">Dashboard</span>
+        </div>
+        <nav class="nav">
+            <a href="javascript:void(0)" class="nav-item active" onclick="showSection('dashboard')">
+                <span class="icon">🏠</span><span class="text">Dashboard</span>
+            </a>
+            <a href="javascript:void(0)" class="nav-item" onclick="showSection('analytics')">
+                <span class="icon">📈</span><span class="text">Analytics</span>
+            </a>
+            <a href="javascript:void(0)" class="nav-item" onclick="showSection('users')">
+                <span class="icon">👥</span><span class="text">Users</span>
+            </a>
+            <a href="javascript:void(0)" class="nav-item" onclick="showSection('products')">
+                <span class="icon">📦</span><span class="text">Products</span>
+            </a>
+            <a href="javascript:void(0)" class="nav-item" onclick="showSection('orders')">
+                <span class="icon">🛒</span><span class="text">Orders</span>
+            </a>
+        </nav>
+    </aside>
+
+    <div class="main-content">
+        <header class="navbar">
+            <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+            <div class="search-bar"><input type="text" placeholder="🔍 Search..."></div>
+            <div class="navbar-right">
+                <div class="greeting" id="greeting"></div>
+                <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
+                <div class="notification-btn" onclick="toggleNotifications()">🔔<span class="badge">3</span>
+                    <div class="dropdown notification-dropdown" id="notifDropdown">
+                        <div class="dropdown-header">Notifications</div>
+                        <div class="notif-item"><span class="notif-icon">✅</span><div><div class="notif-title">New Order</div><div class="notif-time">5 min ago</div></div></div>
+                        <div class="notif-item"><span class="notif-icon">👤</span><div><div class="notif-title">New User</div><div class="notif-time">1 hour ago</div></div></div>
+                    </div>
+                </div>
+                <div class="profile-btn" onclick="toggleProfile()">
+                    <img id="profileImage" src="https://i.pravatar.cc/150?img=12" alt="Profile">
+                    <div class="dropdown profile-dropdown" id="profileDropdown">
+                        <div class="dropdown-header" id="profileName">Admin</div>
+                        <a href="javascript:void(0)" class="dropdown-item" onclick="openProfileModal()">👤 Profile</a>
+                        <a href="javascript:void(0)" class="dropdown-item" onclick="logout()">🚪 Logout</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="content">
+            <!-- DASHBOARD SECTION -->
+            <div id="dashboardSection" class="section active">
+                <div class="stats-grid">
+                    <div class="stat-card"><div class="stat-icon" style="background: linear-gradient(135deg, #667eea, #764ba2)">👥</div><div class="stat-details"><div class="stat-value" data-target="12458">0</div><div class="stat-label">Total Users</div><div class="stat-change positive">+12.5%</div></div></div>
+                    <div class="stat-card"><div class="stat-icon" style="background: linear-gradient(135deg, #f093fb, #f5576c)">💰</div><div class="stat-details"><div class="stat-value" data-target="89750">$0</div><div class="stat-label">Revenue</div><div class="stat-change positive">+8.2%</div></div></div>
+                    <div class="stat-card"><div class="stat-icon" style="background: linear-gradient(135deg, #4facfe, #00f2fe)">🛒</div><div class="stat-details"><div class="stat-value" data-target="3456">0</div><div class="stat-label">Orders</div><div class="stat-change positive">+15.3%</div></div></div>
+                    <div class="stat-card"><div class="stat-icon" style="background: linear-gradient(135deg, #43e97b, #38f9d7)">📈</div><div class="stat-details"><div class="stat-value" data-target="92">0%</div><div class="stat-label">Growth</div><div class="stat-change positive">+5.1%</div></div></div>
+                </div>
+                <div class="charts-grid">
+                    <div class="chart-card"><div class="card-header"><h3>Revenue Overview</h3><button class="download-btn" onclick="downloadChart('revenueChart')">📥</button></div><canvas id="revenueChart"></canvas></div>
+                    <div class="chart-card"><div class="card-header"><h3>Sales Distribution</h3><button class="download-btn" onclick="downloadChart('salesChart')">📥</button></div><canvas id="salesChart"></canvas></div>
+                </div>
+                <div class="table-card">
+                    <div class="table-header"><h3>Recent Orders</h3><div class="table-controls"><input type="text" id="tableSearch" placeholder="Search..." oninput="searchTable()"><select id="entriesSelect" onchange="changeEntries()"><option value="5">5</option><option value="10" selected>10</option></select></div></div>
+                    <div class="table-wrapper"><table id="dataTable"><thead><tr><th onclick="sortTable(0)">Order ID ↕</th><th onclick="sortTable(1)">Customer ↕</th><th onclick="sortTable(2)">Product ↕</th><th onclick="sortTable(3)">Amount ↕</th><th onclick="sortTable(4)">Status ↕</th><th onclick="sortTable(5)">Date ↕</th></tr></thead><tbody id="tableBody"></tbody></table></div>
+                    <div class="pagination" id="pagination"></div>
+                </div>
+            </div>
+
+            <!-- ANALYTICS SECTION -->
+            <div id="analyticsSection" class="section">
+                <h2>Analytics Overview</h2>
+                <div class="stats-grid">
+                    <div class="stat-card"><div class="stat-icon" style="background: linear-gradient(135deg, #667eea, #764ba2)">📊</div><div class="stat-details"><div class="stat-value">2.5K</div><div class="stat-label">Page Views</div><div class="stat-change positive">+18%</div></div></div>
+                    <div class="stat-card"><div class="stat-icon" style="background: linear-gradient(135deg, #f093fb, #f5576c)">⏱️</div><div class="stat-details"><div class="stat-value">3:24</div><div class="stat-label">Avg Session</div><div class="stat-change positive">+5%</div></div></div>
+                    <div class="stat-card"><div class="stat-icon" style="background: linear-gradient(135deg, #4facfe, #00f2fe)">🎯</div><div class="stat-details"><div class="stat-value">68%</div><div class="stat-label">Conversion</div><div class="stat-change positive">+12%</div></div></div>
+                    <div class="stat-card"><div class="stat-icon" style="background: linear-gradient(135deg, #43e97b, #38f9d7)">↩️</div><div class="stat-details"><div class="stat-value">42%</div><div class="stat-label">Bounce Rate</div><div class="stat-change negative">-3%</div></div></div>
+                </div>
+                <div class="charts-grid">
+                    <div class="chart-card"><div class="card-header"><h3>Traffic Sources</h3></div><canvas id="trafficChart"></canvas></div>
+                    <div class="chart-card"><div class="card-header"><h3>User Growth</h3></div><canvas id="growthChart"></canvas></div>
+                </div>
+            </div>
+
+            <!-- USERS SECTION -->
+            <div id="usersSection" class="section">
+                <div class="section-header"><h2>User Management</h2><button class="btn-primary" onclick="addUser()">+ Add User</button></div>
+                <div class="table-card">
+                    <div class="table-wrapper"><table><thead><tr><th>Avatar</th><th>Name</th><th>Email</th><th>Role</th><th>Status</th><th>Actions</th></tr></thead><tbody id="usersTable"></tbody></table></div>
+                </div>
+            </div>
+
+            <!-- PRODUCTS SECTION -->
+            <div id="productsSection" class="section">
+                <div class="section-header"><h2>Products</h2><button class="btn-primary" onclick="addProduct()">+ Add Product</button></div>
+                <div class="products-grid" id="productsGrid"></div>
+            </div>
+
+            <!-- ORDERS SECTION -->
+            <div id="ordersSection" class="section">
+                <h2>Orders Management</h2>
+                <div class="table-card">
+                    <div class="table-wrapper"><table><thead><tr><th>Order ID</th><th>Customer</th><th>Product</th><th>Amount</th><th>Status</th><th>Date</th><th>Actions</th></tr></thead><tbody id="ordersTable"></tbody></table></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Profile Modal -->
+    <div class="modal" id="profileModal">
+        <div class="modal-overlay" onclick="closeProfileModal()"></div>
+        <div class="modal-box">
+            <span class="modal-close" onclick="closeProfileModal()">&times;</span>
+            <h2>Edit Profile</h2>
+            <form onsubmit="saveProfile(event)">
+                <div class="profile-photo"><img id="profilePhotoPreview" src="https://i.pravatar.cc/150?img=12" alt="Profile"><button type="button" class="change-photo-btn" onclick="changeProfilePhoto()">Change Photo</button></div>
+                <div class="input-group"><input type="text" id="profileNameInput" required><label>Full Name</label></div>
+                <div class="input-group"><input type="email" id="profileEmailInput" required><label>Email</label></div>
+                <div class="input-group"><input type="text" id="profilePhoneInput"><label>Phone</label></div>
+                <button type="submit" class="btn-primary">Save Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

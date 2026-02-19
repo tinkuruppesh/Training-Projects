@@ -1,0 +1,114 @@
+[
+  {
+    "id": 1, "title": "Sony WH-1000XM5 Headphones", "price": 24999, "originalPrice": 34990,
+    "category": "Electronics", "rating": 4.8, "reviews": 2341, "stock": 15,
+    "description": "Industry-leading noise canceling with Auto NC Optimizer. Crystal clear hands-free calling. Up to 30-hour battery life with quick charging. Perfect for travel and work.",
+    "images": ["https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&q=80","https://images.unsplash.com/photo-1484704849700-f032a568e944?w=500&q=80"],
+    "brand": "Sony", "featured": true
+  },
+  {
+    "id": 2, "title": "Apple iPhone 15 Pro", "price": 129900, "originalPrice": 134900,
+    "category": "Electronics", "rating": 4.9, "reviews": 5621, "stock": 8,
+    "description": "Titanium design. A17 Pro chip. Pro camera system with 5x optical zoom. Action Button. USB 3 speeds. The most powerful iPhone ever made.",
+    "images": ["https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=500&q=80","https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500&q=80"],
+    "brand": "Apple", "featured": true
+  },
+  {
+    "id": 3, "title": "Nike Air Max 270", "price": 12995, "originalPrice": 15995,
+    "category": "Footwear", "rating": 4.6, "reviews": 1892, "stock": 25,
+    "description": "The Nike Air Max 270 delivers unrivaled comfort with its large Air unit and breathable mesh upper. Perfect for all-day wear and casual outings.",
+    "images": ["https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&q=80","https://images.unsplash.com/photo-1460353581641-37baddab0fa2?w=500&q=80"],
+    "brand": "Nike", "featured": true
+  },
+  {
+    "id": 4, "title": "Samsung 4K QLED TV 55\"", "price": 74999, "originalPrice": 89999,
+    "category": "Electronics", "rating": 4.7, "reviews": 987, "stock": 5,
+    "description": "Quantum Dot technology for brilliant color. 4K resolution. Smart TV with built-in streaming apps. HDR support. Sleek design for modern living rooms.",
+    "images": ["https://images.unsplash.com/photo-1593305841991-05c297ba4575?w=500&q=80","https://images.unsplash.com/photo-1461151304267-38535e780c79?w=500&q=80"],
+    "brand": "Samsung", "featured": false
+  },
+  {
+    "id": 5, "title": "Leather Crossbody Bag", "price": 3499, "originalPrice": 5999,
+    "category": "Fashion", "rating": 4.5, "reviews": 764, "stock": 30,
+    "description": "Premium genuine leather crossbody bag. Multiple compartments. Adjustable strap. Perfect for everyday use. Available in multiple colors.",
+    "images": ["https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=500&q=80","https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=500&q=80"],
+    "brand": "Zara", "featured": false
+  },
+  {
+    "id": 6, "title": "Yoga Mat Premium", "price": 1899, "originalPrice": 2499,
+    "category": "Sports", "rating": 4.4, "reviews": 432, "stock": 50,
+    "description": "Non-slip surface. 6mm thick for joint support. Eco-friendly TPE material. Comes with carrying strap. Suitable for all types of yoga and exercise.",
+    "images": ["https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?w=500&q=80","https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=500&q=80"],
+    "brand": "Decathlon", "featured": false
+  },
+  {
+    "id": 7, "title": "MacBook Air M2", "price": 114900, "originalPrice": 119900,
+    "category": "Electronics", "rating": 4.9, "reviews": 3201, "stock": 12,
+    "description": "Supercharged by M2 chip. 13.6-inch Liquid Retina display. Up to 18 hours battery. Thin and light design. MagSafe charging. Two USB-C ports.",
+    "images": ["https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=500&q=80","https://images.unsplash.com/photo-1611186871525-63d01ff26f28?w=500&q=80"],
+    "brand": "Apple", "featured": true
+  },
+  {
+    "id": 8, "title": "Levi's 511 Slim Jeans", "price": 2999, "originalPrice": 3999,
+    "category": "Fashion", "rating": 4.3, "reviews": 2109, "stock": 40,
+    "description": "Classic slim fit jeans. Premium denim fabric. 5-pocket styling. Available in multiple washes. Comfortable stretch fabric for all-day wear.",
+    "images": ["https://images.unsplash.com/photo-1542272604-787c3835535d?w=500&q=80","https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=500&q=80"],
+    "brand": "Levi's", "featured": false
+  },
+  {
+    "id": 9, "title": "Instant Pot Duo 7-in-1", "price": 8999, "originalPrice": 11999,
+    "category": "Home & Kitchen", "rating": 4.7, "reviews": 4523, "stock": 20,
+    "description": "7-in-1 multi-use programmable pressure cooker. Replaces 7 kitchen appliances. 6 Qt capacity. Safe, convenient and dependable cooking.",
+    "images": ["https://images.unsplash.com/photo-1585515656973-35c9e0b5e947?w=500&q=80","https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=500&q=80"],
+    "brand": "Instant Pot", "featured": false
+  },
+  {
+    "id": 10, "title": "Adidas Ultraboost 22", "price": 17999, "originalPrice": 21999,
+    "category": "Footwear", "rating": 4.7, "reviews": 1456, "stock": 18,
+    "description": "BOOST midsole for incredible energy return. Primeknit+ upper for adaptive fit. Continental rubber outsole for exceptional grip. Best running shoe.",
+    "images": ["https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=500&q=80","https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=500&q=80"],
+    "brand": "Adidas", "featured": true
+  },
+  {
+    "id": 11, "title": "Kindle Paperwhite 11th Gen", "price": 13999, "originalPrice": 16999,
+    "category": "Electronics", "rating": 4.6, "reviews": 876, "stock": 35,
+    "description": "6.8 inch display with adjustable warm light. 10 weeks battery life. Waterproof. 8GB storage. Wireless charging support.",
+    "images": ["https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=500&q=80","https://images.unsplash.com/photo-1495446815901-a7297e633e8d?w=500&q=80"],
+    "brand": "Amazon", "featured": false
+  },
+  {
+    "id": 12, "title": "Whey Protein Isolate 2kg", "price": 3499, "originalPrice": 4299,
+    "category": "Sports", "rating": 4.5, "reviews": 2890, "stock": 60,
+    "description": "25g protein per serving. Low fat, low sugar. Rich chocolate flavor. Fast absorbing whey isolate. Tested and certified for banned substances.",
+    "images": ["https://images.unsplash.com/photo-1593095948071-474c5cc2989d?w=500&q=80","https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=500&q=80"],
+    "brand": "MuscleBlaze", "featured": false
+  },
+  {
+    "id": 13, "title": "Coffee Maker Drip Machine", "price": 4599, "originalPrice": 5999,
+    "category": "Home & Kitchen", "rating": 4.4, "reviews": 654, "stock": 22,
+    "description": "12-cup capacity. Built-in grinder. Programmable 24-hour timer. Keep-warm plate. Pause and pour feature for coffee on the go.",
+    "images": ["https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=500&q=80","https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=500&q=80"],
+    "brand": "Morphy Richards", "featured": false
+  },
+  {
+    "id": 14, "title": "Ray-Ban Aviator Sunglasses", "price": 9999, "originalPrice": 12500,
+    "category": "Fashion", "rating": 4.8, "reviews": 1203, "stock": 15,
+    "description": "Classic metal frame aviator. UV400 protection lenses. Polarized for maximum clarity. Comes with original case and cleaning cloth.",
+    "images": ["https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=500&q=80","https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=500&q=80"],
+    "brand": "Ray-Ban", "featured": false
+  },
+  {
+    "id": 15, "title": "Gaming Mechanical Keyboard", "price": 5999, "originalPrice": 7999,
+    "category": "Electronics", "rating": 4.6, "reviews": 889, "stock": 28,
+    "description": "Cherry MX Red switches for smooth keystrokes. RGB backlit with 16 million colors. Full size layout. Detachable USB-C cable. Aluminum top frame.",
+    "images": ["https://images.unsplash.com/photo-1601445638532-3c6f6c3aa1d6?w=500&q=80","https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=500&q=80"],
+    "brand": "HyperX", "featured": false
+  },
+  {
+    "id": 16, "title": "Plant-Based Face Moisturizer", "price": 1299, "originalPrice": 1799,
+    "category": "Beauty", "rating": 4.5, "reviews": 2341, "stock": 45,
+    "description": "24-hour hydration formula. SPF 30 protection. Non-greasy and lightweight. Suitable for all skin types. No parabens, no sulfates, cruelty-free.",
+    "images": ["https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=500&q=80","https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=500&q=80"],
+    "brand": "Forest Essentials", "featured": false
+  }
+]

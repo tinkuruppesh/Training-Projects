@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatFlow - AI Assistant</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <span class="logo-icon">💬</span>
+                    <h2>ChatFlow</h2>
+                </div>
+               
+            </div>
+
+            <button class="new-chat-btn" onclick="createNewChat()">
+                <span>+</span>
+                <span>New Chat</span>
+            </button>
+
+            <div class="search-chats">
+                <input type="text" id="chatSearch" placeholder="🔍 Search chats..." oninput="searchChats()">
+            </div>
+
+            <div class="chat-categories">
+                <button class="category-btn active" data-category="all" onclick="filterChatsByCategory('all')">
+                    <span>💬</span>
+                    <span>All Chats</span>
+                    <span class="count" id="allCount">0</span>
+                </button>
+                <button class="category-btn" data-category="pinned" onclick="filterChatsByCategory('pinned')">
+                    <span>📌</span>
+                    <span>Pinned</span>
+                    <span class="count" id="pinnedCount">0</span>
+                </button>
+                <button class="category-btn" data-category="archived" onclick="filterChatsByCategory('archived')">
+                    <span>🗄️</span>
+                    <span>Archived</span>
+                    <span class="count" id="archivedCount">0</span>
+                </button>
+            </div>
+
+            <div class="chat-list" id="chatList"></div>
+
+            <div class="sidebar-footer">
+                <button class="settings-btn" onclick="showSettings()">
+                    <span>⚙️</span>
+                    <span>Settings</span>
+                </button>
+                <button class="theme-btn" onclick="toggleTheme()">🌓</button>
+            </div>
+        </aside>
+
+        <main class="chat-container">
+            <header class="chat-header">
+                <button class="mobile-menu-btn" onclick="toggleSidebar()">☰</button>
+                <div class="chat-info">
+                    <div class="bot-avatar">🤖</div>
+                    <div>
+                        <h3 id="chatTitle">AI Assistant</h3>
+                        <span class="status" id="botStatus">Online</span>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <button class="icon-btn" onclick="exportChat()" title="Export Chat">📥</button>
+                    <button class="icon-btn" onclick="clearChat()" title="Clear Chat">🗑️</button>
+                </div>
+            </header>
+
+            <div class="messages-area" id="messagesArea">
+                <div class="welcome-screen" id="welcomeScreen">
+                    <div class="welcome-icon">💬</div>
+                    <h2>Welcome to ChatFlow</h2>
+                    <p>Your intelligent AI assistant is ready to help!</p>
+                    <div class="suggestions">
+                        <button class="suggestion-btn" onclick="sendSuggestion('Tell me a joke')">😄 Tell me a joke</button>
+                        <button class="suggestion-btn" onclick="sendSuggestion('Explain quantum computing')">🔬 Explain quantum computing</button>
+                        <button class="suggestion-btn" onclick="sendSuggestion('Write a poem about coding')">✍️ Write a poem</button>
+                        <button class="suggestion-btn" onclick="sendSuggestion('Give me productivity tips')">⚡ Productivity tips</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="typing-indicator" id="typingIndicator">
+                <div class="typing-dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <span>AI is typing...</span>
+            </div>
+
+            <div class="input-area">
+                <button class="icon-btn" onclick="showAttachments()" title="Attach">📎</button>
+                <div class="input-wrapper">
+                    <textarea id="messageInput" placeholder="Type your message..." rows="1" onkeydown="handleKeyPress(event)" oninput="autoResize(this)"></textarea>
+                    <button class="emoji-btn" onclick="showEmojiPicker()">😊</button>
+                </div>
+                <button class="send-btn" onclick="sendMessage()" id="sendBtn">
+                    <span>➤</span>
+                </button>
+                <button class="voice-btn" onclick="toggleVoiceInput()" id="voiceBtn" title="Voice Input">
+                    🎤
+                </button>
+            </div>
+        </main>
+    </div>
+
+    <div class="side-panel" id="settingsPanel">
+        <button class="panel-close" onclick="closeSettings()">×</button>
+        <div class="panel-header">
+            <h3>⚙️ Settings</h3>
+        </div>
+        <div class="panel-content">
+            <div class="setting-group">
+                <label>Bot Personality</label>
+                <select id="botPersonality" onchange="changeBotPersonality()">
+                    <option value="friendly">😊 Friendly</option>
+                    <option value="professional">💼 Professional</option>
+                    <option value="humorous">😄 Humorous</option>
+                    <option value="technical">🤓 Technical</option>
+                </select>
+            </div>
+            <div class="setting-group">
+                <label>Response Speed</label>
+                <select id="responseSpeed" onchange="changeResponseSpeed()">
+                    <option value="fast">⚡ Fast (1s)</option>
+                    <option value="normal" selected>⏱️ Normal (2s)</option>
+                    <option value="slow">🐌 Slow (3s)</option>
+                </select>
+            </div>
+            <div class="setting-group">
+                <label>Message Sound</label>
+                <label class="toggle">
+                    <input type="checkbox" id="soundToggle" checked onchange="toggleSound()">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+            <div class="setting-group">
+                <label>Auto-scroll</label>
+                <label class="toggle">
+                    <input type="checkbox" id="autoScrollToggle" checked onchange="toggleAutoScroll()">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+            <div class="setting-group">
+                <label>Show Timestamps</label>
+                <label class="toggle">
+                    <input type="checkbox" id="timestampToggle" checked onchange="toggleTimestamps()">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <div class="emoji-picker" id="emojiPicker">
+        <div class="emoji-grid"></div>
+    </div>
+
+    <div class="modal" id="shortcutsModal">
+        <div class="modal-overlay" onclick="closeShortcuts()"></div>
+        <div class="modal-content shortcuts-modal">
+            <button class="modal-close" onclick="closeShortcuts()">×</button>
+            <div class="modal-body">
+                <h2>⌨️ Keyboard Shortcuts</h2>
+                <div class="shortcuts-list">
+                    <div class="shortcut-item">
+                        <kbd>Ctrl</kbd> + <kbd>N</kbd>
+                        <span>New Chat</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <kbd>Ctrl</kbd> + <kbd>K</kbd>
+                        <span>Search Chats</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <kbd>Ctrl</kbd> + <kbd>B</kbd>
+                        <span>Toggle Sidebar</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <kbd>Ctrl</kbd> + <kbd>D</kbd>
+                        <span>Delete Current Chat</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <kbd>Ctrl</kbd> + <kbd>P</kbd>
+                        <span>Pin/Unpin Chat</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <kbd>Enter</kbd>
+                        <span>Send Message</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <kbd>Shift</kbd> + <kbd>Enter</kbd>
+                        <span>New Line</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <kbd>Esc</kbd>
+                        <span>Close Modals</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

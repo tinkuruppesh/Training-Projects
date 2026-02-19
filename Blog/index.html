@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ModernBlog</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>📝 ModernBlog</h1>
+            <button class="theme-btn" onclick="toggleTheme()">🌓</button>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h2>Discover Amazing Stories</h2>
+            <input type="text" id="search" placeholder="🔍 Search..." oninput="render()">
+            <div class="controls">
+                <div class="filters" id="filters"></div>
+                <button class="new-btn" onclick="openForm()">+ New Blog</button>
+            </div>
+        </div>
+    </section>
+
+    <main class="container">
+        <div class="posts" id="posts"></div>
+    </main>
+
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <div class="modal" id="formModal">
+        <div class="modal-content">
+            <span class="close" onclick="closeForm()">&times;</span>
+            <h2>Create New Blog</h2>
+            <form onsubmit="saveBlog(event)">
+                <input type="text" id="title" placeholder="Title" required>
+                <input type="text" id="author" placeholder="Author" required>
+                <input type="text" id="category" placeholder="Category" required>
+                <textarea id="content" placeholder="Content..." rows="6" required></textarea>
+                <input type="url" id="image" placeholder="Image URL" required>
+                <button type="submit">Publish</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

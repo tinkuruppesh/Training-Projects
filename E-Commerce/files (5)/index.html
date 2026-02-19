@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShopWave – Premium Online Shopping</title>
+  <meta name="description" content="ShopWave – Discover thousands of premium products at unbeatable prices with fast delivery across India.">
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛍️</text></svg>">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Leaflet CSS for Order Tracking Map (no integrity hash = no blocking) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+
+  <!-- ✅ MAIN STYLESHEET (correct relative path) -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- =====================
+       TOP NAVBAR
+       ===================== -->
+  <nav id="navbar">
+    <!-- Populated by buildNavbar() in script.js -->
+  </nav>
+
+  <!-- =====================
+       ALL PAGE SECTIONS
+       JS shows/hides via .active class
+       ===================== -->
+
+  <!-- LOGIN / REGISTER PAGE -->
+  <div id="page-login" class="page">
+    <!-- Rendered by renderLogin() -->
+  </div>
+
+  <!-- HOME PAGE -->
+  <div id="page-home" class="page">
+    <!-- Rendered by renderHome() -->
+  </div>
+
+  <!-- PRODUCTS LISTING PAGE -->
+  <div id="page-products" class="page">
+    <!-- Rendered by renderProducts() -->
+  </div>
+
+  <!-- CART PAGE -->
+  <div id="page-cart" class="page">
+    <!-- Rendered by renderCart() -->
+  </div>
+
+  <!-- CHECKOUT PAGE -->
+  <div id="page-checkout" class="page">
+    <!-- Rendered by renderCheckout() -->
+  </div>
+
+  <!-- ORDER SUCCESS PAGE -->
+  <div id="page-success" class="page">
+    <!-- Rendered by renderSuccess() -->
+  </div>
+
+  <!-- MY ORDERS PAGE -->
+  <div id="page-orders" class="page">
+    <!-- Rendered by renderOrders() -->
+  </div>
+
+  <!-- WISHLIST PAGE -->
+  <div id="page-wishlist" class="page">
+    <!-- Rendered by renderWishlist() -->
+  </div>
+
+  <!-- ORDER TRACKING PAGE -->
+  <div id="page-tracking" class="page">
+    <!-- Rendered by renderTracking() -->
+  </div>
+
+  <!-- =====================
+       MOBILE BOTTOM NAV
+       ===================== -->
+  <nav class="mobile-nav" id="mobile-nav" style="display:none;">
+    <!-- Populated by buildMobileNav() -->
+  </nav>
+
+  <!-- =====================
+       TOAST NOTIFICATIONS
+       ===================== -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <!-- =====================
+       LEAFLET MAP JS
+       No integrity hash — loads cleanly
+       ===================== -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+
+  <!-- ✅ MAIN SCRIPT (correct relative path) -->
+  <script src="js/script.js"></script>
+
+</body>
+</html>

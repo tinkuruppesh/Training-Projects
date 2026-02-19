@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Apex Dashboard</title>
+
+  <!-- Google Fonts: Syne + DM Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+  <!-- html2canvas for PNG export -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+  <!-- jsPDF for PDF export -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════
+     SIDEBAR
+═══════════════════════════════════════════════════ -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-mark">A</div>
+    <span class="logo-text">Apex</span>
+  </div>
+
+  <nav class="sidebar-nav">
+    <div class="nav-section-label">Main</div>
+    <ul>
+      <li class="nav-item active" data-page="dashboard" tabindex="0">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+        <span>Dashboard</span>
+      </li>
+      <li class="nav-item" data-page="analytics" tabindex="0">
+        <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        <span>Analytics</span>
+      </li>
+      <li class="nav-item" data-page="orders" tabindex="0">
+        <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        <span>Orders</span>
+        <span class="nav-badge">12</span>
+      </li>
+      <li class="nav-item" data-page="users" tabindex="0">
+        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+        <span>Users</span>
+      </li>
+    </ul>
+
+    <div class="nav-section-label" style="margin-top:1.5rem">Finance</div>
+    <ul>
+      <li class="nav-item" data-page="revenue" tabindex="0">
+        <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+        <span>Revenue</span>
+      </li>
+      <li class="nav-item" data-page="transactions" tabindex="0">
+        <svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+        <span>Transactions</span>
+      </li>
+    </ul>
+
+    <div class="nav-section-label" style="margin-top:1.5rem">System</div>
+    <ul>
+      <li class="nav-item" data-page="settings" tabindex="0">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+        <span>Settings</span>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Sidebar Clock -->
+  <div class="sidebar-clock">
+    <div class="clock-time" id="clockTime">00:00:00</div>
+    <div class="clock-date" id="clockDate">--</div>
+  </div>
+
+  <!-- Sidebar Collapse Toggle -->
+  <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+    <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+  </button>
+</aside>
+
+<!-- Overlay for mobile -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<!-- ═══════════════════════════════════════════════════
+     MAIN CONTENT
+═══════════════════════════════════════════════════ -->
+<main class="main-content" id="mainContent">
+
+  <!-- TOP NAVBAR -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open menu">
+        <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <div class="search-bar">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" id="globalSearch" placeholder="Search anything… (Alt+K)" aria-label="Global search" />
+        <kbd>⌘K</kbd>
+      </div>
+    </div>
+
+    <div class="topbar-right">
+      <!-- Fullscreen -->
+      <button class="icon-btn" id="fullscreenBtn" title="Fullscreen (F11)" aria-label="Toggle fullscreen">
+        <svg viewBox="0 0 24 24"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+      </button>
+
+      <!-- Theme Toggle -->
+      <button class="icon-btn theme-toggle" id="themeToggle" title="Toggle theme" aria-label="Toggle theme">
+        <svg class="sun-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg class="moon-icon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+      </button>
+
+      <!-- Notifications -->
+      <div class="notif-wrapper" id="notifWrapper">
+        <button class="icon-btn notif-btn" id="notifBtn" aria-label="Notifications">
+          <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+          <span class="notif-count" id="notifCount">4</span>
+        </button>
+        <div class="notif-dropdown" id="notifDropdown" aria-hidden="true">
+          <div class="notif-header">
+            <h4>Notifications</h4>
+            <button id="markAllRead">Mark all read</button>
+          </div>
+          <div class="notif-list" id="notifList">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Profile -->
+      <div class="profile-wrapper" id="profileWrapper">
+        <button class="profile-btn" id="profileBtn" aria-label="Profile menu">
+          <div class="avatar">JD</div>
+          <div class="profile-info">
+            <span class="profile-name">Jane Doe</span>
+            <span class="profile-role">Admin</span>
+          </div>
+          <svg viewBox="0 0 24 24" class="chevron"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="profile-dropdown" id="profileDropdown" aria-hidden="true">
+          <a href="#" class="dropdown-item">
+            <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>My Profile
+          </a>
+          <a href="#" class="dropdown-item">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4"/></svg>Settings
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item danger">
+            <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Sign out
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- PAGE CONTENT -->
+  <div class="page-content">
+
+    <!-- GREETING -->
+    <div class="greeting-bar">
+      <div>
+        <h1 class="greeting-text" id="greetingText">Good morning, Jane 👋</h1>
+        <p class="greeting-sub">Here's what's happening with your business today.</p>
+      </div>
+      <div class="theme-selector">
+        <span>Accent:</span>
+        <button class="color-dot" data-color="#6EE7B7" style="background:#6EE7B7" title="Emerald"></button>
+        <button class="color-dot" data-color="#818CF8" style="background:#818CF8" title="Indigo"></button>
+        <button class="color-dot" data-color="#F472B6" style="background:#F472B6" title="Rose"></button>
+        <button class="color-dot" data-color="#FB923C" style="background:#FB923C" title="Orange"></button>
+        <button class="color-dot" data-color="#38BDF8" style="background:#38BDF8" title="Sky"></button>
+      </div>
+    </div>
+
+    <!-- ── STAT CARDS (drag-and-drop) ── -->
+    <section class="stats-grid" id="statsGrid">
+      <div class="stat-card" draggable="true" data-id="users">
+        <div class="stat-icon icon-users"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
+        <div class="stat-body">
+          <span class="stat-label">Total Users</span>
+          <span class="stat-value counter" data-target="84291">0</span>
+          <span class="stat-trend up">↑ 12.4% vs last month</span>
+        </div>
+        <div class="sparkline-wrap"><canvas class="sparkline" id="spark1"></canvas></div>
+      </div>
+
+      <div class="stat-card" draggable="true" data-id="revenue">
+        <div class="stat-icon icon-revenue"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
+        <div class="stat-body">
+          <span class="stat-label">Revenue</span>
+          <span class="stat-value counter" data-target="248670" data-prefix="$">$0</span>
+          <span class="stat-trend up">↑ 8.1% vs last month</span>
+        </div>
+        <div class="sparkline-wrap"><canvas class="sparkline" id="spark2"></canvas></div>
+      </div>
+
+      <div class="stat-card" draggable="true" data-id="orders">
+        <div class="stat-icon icon-orders"><svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></div>
+        <div class="stat-body">
+          <span class="stat-label">Orders</span>
+          <span class="stat-value counter" data-target="5839">0</span>
+          <span class="stat-trend down">↓ 2.3% vs last month</span>
+        </div>
+        <div class="sparkline-wrap"><canvas class="sparkline" id="spark3"></canvas></div>
+      </div>
+
+      <div class="stat-card" draggable="true" data-id="growth">
+        <div class="stat-icon icon-growth"><svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div>
+        <div class="stat-body">
+          <span class="stat-label">Growth Rate</span>
+          <span class="stat-value counter" data-target="23" data-suffix="%">0%</span>
+          <span class="stat-trend up">↑ 5.7% vs last month</span>
+        </div>
+        <div class="sparkline-wrap"><canvas class="sparkline" id="spark4"></canvas></div>
+      </div>
+    </section>
+
+    <!-- ── CHARTS ROW ── -->
+    <section class="charts-row">
+      <!-- Revenue Line Chart -->
+      <div class="chart-card chart-large">
+        <div class="chart-header">
+          <div>
+            <h3>Revenue Overview</h3>
+            <p>Monthly revenue vs expenses — last 12 months</p>
+          </div>
+          <div class="chart-actions">
+            <button class="chart-btn active" data-range="12m">12M</button>
+            <button class="chart-btn" data-range="6m">6M</button>
+            <button class="chart-btn" data-range="3m">3M</button>
+            <button class="icon-btn small" id="downloadRevenuePng" title="Download PNG">
+              <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="chart-body" id="revenueChartWrap">
+          <canvas id="revenueChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Pie Chart -->
+      <div class="chart-card chart-small">
+        <div class="chart-header">
+          <div>
+            <h3>Traffic Sources</h3>
+            <p>Breakdown by channel</p>
+          </div>
+          <button class="icon-btn small" id="downloadPiePng" title="Download PNG">
+            <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          </button>
+        </div>
+        <div class="chart-body">
+          <canvas id="pieChart"></canvas>
+        </div>
+        <div class="legend" id="pieLegend"></div>
+      </div>
+    </section>
+
+    <!-- ── GOALS + ACTIVITY ROW ── -->
+    <section class="mid-row">
+      <!-- Goals with animated progress bars -->
+      <div class="card goals-card">
+        <div class="card-header">
+          <h3>Monthly Goals</h3>
+          <span class="badge">Feb 2026</span>
+        </div>
+        <div class="goals-list" id="goalsList">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- Bar Chart -->
+      <div class="chart-card">
+        <div class="chart-header">
+          <div>
+            <h3>Orders by Category</h3>
+            <p>Current quarter performance</p>
+          </div>
+        </div>
+        <div class="chart-body">
+          <canvas id="barChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Activity Timeline -->
+      <div class="card activity-card">
+        <div class="card-header">
+          <h3>Activity Feed</h3>
+          <a href="#" class="link-btn">View all</a>
+        </div>
+        <div class="activity-list" id="activityList">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ── TRANSACTIONS + TABLE ── -->
+    <section class="bottom-row">
+
+      <!-- Recent Transactions -->
+      <div class="card transactions-card">
+        <div class="card-header">
+          <h3>Recent Transactions</h3>
+          <a href="#" class="link-btn">See all</a>
+        </div>
+        <div class="txn-list" id="txnList">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ── DATA TABLE ── -->
+    <section class="table-section">
+      <div class="card">
+        <div class="card-header">
+          <h3>Users Table</h3>
+          <div class="table-controls">
+            <div class="table-search">
+              <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input type="text" id="tableSearch" placeholder="Search users…" />
+            </div>
+            <select id="pageSizeSelect" class="select-sm">
+              <option value="5">5 / page</option>
+              <option value="10" selected>10 / page</option>
+              <option value="20">20 / page</option>
+            </select>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table id="dataTable">
+            <thead>
+              <tr>
+                <th data-col="name" class="sortable">Name <span class="sort-icon">↕</span></th>
+                <th data-col="email" class="sortable">Email <span class="sort-icon">↕</span></th>
+                <th data-col="role" class="sortable">Role <span class="sort-icon">↕</span></th>
+                <th data-col="status" class="sortable">Status <span class="sort-icon">↕</span></th>
+                <th data-col="revenue" class="sortable">Revenue <span class="sort-icon">↕</span></th>
+                <th data-col="joined" class="sortable">Joined <span class="sort-icon">↕</span></th>
+              </tr>
+            </thead>
+            <tbody id="tableBody">
+              <!-- Populated by JS -->
+            </tbody>
+          </table>
+        </div>
+        <div class="pagination" id="pagination">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </section>
+
+  </div><!-- /page-content -->
+</main>
+
+<!-- Keyboard Shortcuts hint -->
+<div class="shortcuts-hint" id="shortcutsHint">
+  <strong>Keyboard Shortcuts</strong>
+  <ul>
+    <li><kbd>Alt+K</kbd> Focus search</li>
+    <li><kbd>Alt+T</kbd> Toggle theme</li>
+    <li><kbd>Alt+S</kbd> Toggle sidebar</li>
+    <li><kbd>Alt+F</kbd> Fullscreen</li>
+    <li><kbd>?</kbd> This panel</li>
+  </ul>
+  <button id="closeShortcuts">✕</button>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
