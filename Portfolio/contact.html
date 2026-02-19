@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact – Kurakula Ruppesh</title>
+  <meta name="description" content="Get in touch with Kurakula Ruppesh – Full Stack Developer." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👨‍💻</text></svg>" />
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<div id="loader"><div class="loader-inner"><div class="loader-ring"></div><div class="loader-text">KR</div></div></div>
+<div id="scroll-progress"></div>
+<div class="page-transition"></div>
+
+<nav class="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="nav-logo">Ruppesh<span>.</span></a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="projects.html">Projects</a>
+      <a href="resume.html">Resume</a>
+      <a href="contact.html" class="nav-cta active">Contact</a>
+    </div>
+    <div class="hamburger"><span></span><span></span><span></span></div>
+  </div>
+</nav>
+<div class="menu-overlay"></div>
+<div class="mobile-menu">
+  <a href="index.html">🏠 Home</a>
+  <a href="about.html">👤 About</a>
+  <a href="projects.html">🚀 Projects</a>
+  <a href="resume.html">📄 Resume</a>
+  <a href="contact.html" class="active">✉️ Contact</a>
+</div>
+
+<!-- Hero -->
+<section class="contact-hero">
+  <div class="section-container">
+    <div class="section-header">
+      <span class="section-tag">Get In Touch</span>
+      <h1 class="section-title">Let's <span>Connect</span></h1>
+      <div class="section-divider"></div>
+      <p class="section-subtitle" style="margin-top:16px;">Have a project idea, internship offer, or just want to say hi? I'd love to hear from you!</p>
+    </div>
+  </div>
+</section>
+
+<!-- Contact Section -->
+<section style="padding:60px 0 80px;">
+  <div class="section-container">
+    <div class="contact-layout">
+
+      <!-- Contact Info -->
+      <div class="contact-info reveal-left">
+        <p class="contact-intro">
+          I'm currently open to internship opportunities, project collaborations, and interesting conversations around technology. Whether you have a question or just want to connect — my inbox is always open!
+        </p>
+
+        <div class="contact-methods">
+          <a href="mailto:ruppeshtinku2006@gmail.com" class="contact-method">
+            <div class="method-icon">📧</div>
+            <div>
+              <div class="method-label">Personal Email</div>
+              <div class="method-value">ruppeshtinku2006@gmail.com</div>
+            </div>
+          </a>
+          <a href="mailto:23691A28D2@mits.ac.in" class="contact-method">
+            <div class="method-icon">🎓</div>
+            <div>
+              <div class="method-label">Academic Email</div>
+              <div class="method-value">23691A28D2@mits.ac.in</div>
+            </div>
+          </a>
+          <a href="tel:+919182036959" class="contact-method">
+            <div class="method-icon">📱</div>
+            <div>
+              <div class="method-label">Phone (Primary)</div>
+              <div class="method-value">+91 9182036959</div>
+            </div>
+          </a>
+          <a href="tel:+918106282569" class="contact-method">
+            <div class="method-icon">📞</div>
+            <div>
+              <div class="method-label">Phone (Alternate)</div>
+              <div class="method-value">+91 8106282569</div>
+            </div>
+          </a>
+          <div class="contact-method">
+            <div class="method-icon">📍</div>
+            <div>
+              <div class="method-label">Location</div>
+              <div class="method-value">Madanapalle, Andhra Pradesh, India</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="social-links">
+          <a href="https://www.linkedin.com/in/ruppesh-tinku-91381b2ba" target="_blank" class="social-link">
+            <span>💼</span> LinkedIn
+          </a>
+          <a href="mailto:ruppeshtinku2006@gmail.com" class="social-link">
+            <span>📧</span> Email Me
+          </a>
+          <a href="tel:+919182036959" class="social-link">
+            <span>📱</span> Call Me
+          </a>
+        </div>
+
+        <!-- Availability Badge -->
+        <div style="margin-top:28px;padding:20px;background:rgba(34,197,94,0.06);border:1.5px solid rgba(34,197,94,0.2);border-radius:var(--radius-md);display:flex;align-items:center;gap:12px;">
+          <div style="width:10px;height:10px;background:#22c55e;border-radius:50%;flex-shrink:0;animation:pulse 2s infinite;"></div>
+          <div>
+            <div style="font-size:0.88rem;font-weight:700;color:#16a34a;">Open to Opportunities</div>
+            <div style="font-size:0.78rem;color:var(--text-light);margin-top:2px;">Internships · Freelance · Collaborations</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact Form -->
+      <div class="contact-form-wrap reveal-right">
+        <h2 class="form-title">Send a Message 💬</h2>
+
+        <form id="contactForm" novalidate>
+          <div class="form-group">
+            <label for="name">Your Full Name *</label>
+            <input type="text" id="name" name="name" placeholder="e.g. Rahul Sharma" autocomplete="name" />
+            <div class="error-msg" id="nameError"></div>
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address *</label>
+            <input type="email" id="email" name="email" placeholder="your@email.com" autocomplete="email" />
+            <div class="error-msg" id="emailError"></div>
+          </div>
+          <div class="form-group">
+            <label for="subject">Subject</label>
+            <input type="text" id="subject" name="subject" placeholder="e.g. Internship Opportunity / Project Idea" />
+          </div>
+          <div class="form-group">
+            <label for="message">Your Message *</label>
+            <textarea id="message" name="message" rows="5" placeholder="Tell me about your project, opportunity, or just say hello..."></textarea>
+            <div class="error-msg" id="messageError"></div>
+          </div>
+          <button type="submit" class="form-btn">✉️ Send Message</button>
+        </form>
+
+        <div class="success-message">
+          <p>🎉 Message sent successfully! I'll get back to you within 24 hours. Thank you!</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Map Section -->
+<section class="map-section" style="padding:0 0 80px;">
+  <div class="section-container">
+    <div class="section-header reveal" style="margin-bottom:32px;">
+      <span class="section-tag">Location</span>
+      <h2 class="section-title">Based in <span>Madanapalle</span></h2>
+      <div class="section-divider"></div>
+    </div>
+    <div class="map-wrap reveal">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d30784.01234567890!2d78.5!3d13.5504!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bb2c7b3b09d9ac5%3A0x7b1b9b9b9b9b9b9b!2sMadanapalle%2C%20Andhra%20Pradesh%2C%20India!5e0!3m2!1sen!2sin!4v1000000000000!5m2!1sen!2sin"
+        width="100%"
+        height="380"
+        style="border:0;"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="Madanapalle, Andhra Pradesh Location">
+      </iframe>
+    </div>
+    <p style="text-align:center;margin-top:16px;font-size:0.88rem;color:var(--text-light);">📍 Madanapalle, Andhra Pradesh, India – Home of MITS Campus</p>
+  </div>
+</section>
+
+<!-- FAQ / Quick Info -->
+<section style="background:var(--off-white);padding:60px 0;">
+  <div class="section-container">
+    <div class="section-header reveal">
+      <span class="section-tag">Quick Info</span>
+      <h2 class="section-title">Frequently <span>Asked</span></h2>
+      <div class="section-divider"></div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;">
+      <div class="glass-card reveal delay-1" style="padding:24px;">
+        <div style="font-size:1.5rem;margin-bottom:12px;">⏰</div>
+        <h3 style="font-size:0.95rem;font-weight:700;margin-bottom:8px;">Response Time</h3>
+        <p style="font-size:0.85rem;color:var(--text-light);line-height:1.7;">I typically respond to emails within 24 hours. For urgent matters, feel free to call directly.</p>
+      </div>
+      <div class="glass-card reveal delay-2" style="padding:24px;">
+        <div style="font-size:1.5rem;margin-bottom:12px;">💼</div>
+        <h3 style="font-size:0.95rem;font-weight:700;margin-bottom:8px;">Open For</h3>
+        <p style="font-size:0.85rem;color:var(--text-light);line-height:1.7;">Internships (preferably Java/Full Stack), freelance web projects, academic collaborations, and open-source contributions.</p>
+      </div>
+      <div class="glass-card reveal delay-3" style="padding:24px;">
+        <div style="font-size:1.5rem;margin-bottom:12px;">🚫</div>
+        <h3 style="font-size:0.95rem;font-weight:700;margin-bottom:8px;">Not Available For</h3>
+        <p style="font-size:0.85rem;color:var(--text-light);line-height:1.7;">Full-time positions until graduation in 2027. However, part-time and remote work are definitely welcome!</p>
+      </div>
+      <div class="glass-card reveal delay-4" style="padding:24px;">
+        <div style="font-size:1.5rem;margin-bottom:12px;">🌏</div>
+        <h3 style="font-size:0.95rem;font-weight:700;margin-bottom:8px;">Remote Work</h3>
+        <p style="font-size:0.85rem;color:var(--text-light);line-height:1.7;">Absolutely! Comfortable working remotely with strong communication through email, LinkedIn, and video calls.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="section-container">
+    <div class="footer-name">Ruppesh<span>.</span></div>
+    <p class="footer-tagline">Full Stack Developer · B.Tech CSE · MITS</p>
+    <div class="footer-links">
+      <a href="index.html">Home</a><a href="about.html">About</a><a href="projects.html">Projects</a><a href="resume.html">Resume</a><a href="contact.html">Contact</a>
+    </div>
+    <p class="footer-copy">© 2024 Kurakula Ruppesh. Crafted with ❤️ and lots of ☕</p>
+  </div>
+</footer>
+
+<button id="scroll-top">↑</button>
+<script src="script.js"></script>
+</body>
+</html>

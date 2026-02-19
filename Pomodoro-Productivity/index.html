@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pomodoro Productivity Timer</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🍅 Pomodoro Productivity Timer</h1>
+      <p class="subtitle">Boost your focus and productivity with the Pomodoro Technique</p>
+    </header>
+    
+    <main>
+      <!-- Timer Section -->
+      <section class="timer-section">
+        <div class="timer-modes">
+          <button class="mode-btn active" data-mode="work">Work</button>
+          <button class="mode-btn" data-mode="short">Short Break</button>
+          <button class="mode-btn" data-mode="long">Long Break</button>
+          <button class="mode-btn settings-btn" id="settingsBtn">⚙️ Settings</button>
+        </div>
+
+        <!-- Timer Settings Modal -->
+        <div class="settings-modal" id="settingsModal" style="display:none;">
+          <div class="settings-content">
+            <h3>Timer Settings</h3>
+            <div class="setting-item">
+              <label>Work Duration (minutes):</label>
+              <input type="number" id="workDuration" min="1" max="60" value="25">
+            </div>
+            <div class="setting-item">
+              <label>Short Break (minutes):</label>
+              <input type="number" id="shortDuration" min="1" max="30" value="5">
+            </div>
+            <div class="setting-item">
+              <label>Long Break (minutes):</label>
+              <input type="number" id="longDuration" min="1" max="60" value="15">
+            </div>
+            <div class="settings-actions">
+              <button id="saveSettings" class="control-btn primary">Save</button>
+              <button id="closeSettings" class="control-btn">Cancel</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="timer-display">
+          <div id="timeDisplay">25:00</div>
+          <div class="current-mode" id="currentMode">Work Session</div>
+        </div>
+
+        <div class="timer-controls">
+          <button id="startBtn" class="control-btn primary">Start</button>
+          <button id="pauseBtn" class="control-btn" style="display:none;">Pause</button>
+          <button id="resetBtn" class="control-btn">Reset</button>
+        </div>
+
+        <div class="session-info">
+          <p>Completed Sessions: <span id="sessionCount">0</span></p>
+        </div>
+      </section>
+
+      <!-- Tasks Section -->
+      <section class="tasks-section">
+        <h2>📋 Today's Tasks</h2>
+        <div class="task-input">
+          <input type="text" id="taskInput" placeholder="What are you working on?">
+          <button id="addTaskBtn">Add Task</button>
+        </div>
+        <ul id="taskList" class="task-list"></ul>
+      </section>
+
+      <!-- Analytics Section -->
+      <section class="analytics-section">
+        <h2>📊 Your Productivity Stats</h2>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-value" id="completedSessions">0</div>
+            <div class="stat-label">Completed Sessions</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="totalFocusTime">0</div>
+            <div class="stat-label">Total Focus Time (min)</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="completedTasks">0</div>
+            <div class="stat-label">Tasks Completed</div>
+          </div>
+        </div>
+        <button id="resetStats" class="reset-stats-btn">Reset All Stats</button>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

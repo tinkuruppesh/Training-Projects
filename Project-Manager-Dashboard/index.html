@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Manager Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-content">
+        <h1>📊 Project Manager Dashboard</h1>
+        <p class="subtitle">Manage your tasks efficiently</p>
+      </div>
+      <button id="addTaskBtn" class="btn-primary">+ Add Task</button>
+    </header>
+
+    <!-- Dashboard Cards -->
+    <section class="dashboard-cards">
+      <div class="card stat-card">
+        <div class="stat-icon">📋</div>
+        <div class="stat-info">
+          <h3 id="totalTasks">0</h3>
+          <p>Total Tasks</p>
+        </div>
+      </div>
+      <div class="card stat-card">
+        <div class="stat-icon">✅</div>
+        <div class="stat-info">
+          <h3 id="completedTasks">0</h3>
+          <p>Completed</p>
+        </div>
+      </div>
+      <div class="card stat-card">
+        <div class="stat-icon">⏳</div>
+        <div class="stat-info">
+          <h3 id="pendingTasks">0</h3>
+          <p>Pending</p>
+        </div>
+      </div>
+      <div class="card stat-card">
+        <div class="stat-icon">📈</div>
+        <div class="stat-info">
+          <h3 id="progressPercent">0%</h3>
+          <p>Progress</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Charts Section -->
+    <section class="charts-section">
+      <div class="card chart-card">
+        <h3>Task Completion Trend</h3>
+        <canvas id="completionChart"></canvas>
+      </div>
+      <div class="card chart-card">
+        <h3>Status Distribution</h3>
+        <canvas id="statusChart"></canvas>
+      </div>
+    </section>
+
+    <!-- Filters & Search -->
+    <section class="filters-section">
+      <input type="text" id="searchInput" placeholder="Search tasks...">
+      <select id="statusFilter">
+        <option value="">All Status</option>
+        <option value="todo">To Do</option>
+        <option value="in-progress">In Progress</option>
+        <option value="completed">Completed</option>
+      </select>
+      <select id="priorityFilter">
+        <option value="">All Priority</option>
+        <option value="high">High</option>
+        <option value="medium">Medium</option>
+        <option value="low">Low</option>
+      </select>
+      <button id="clearFiltersBtn" class="btn-secondary">Clear Filters</button>
+    </section>
+
+    <!-- Overdue Notifications -->
+    <div id="overdueNotifications" class="notifications"></div>
+
+    <!-- Tasks List -->
+    <section class="tasks-section">
+      <h2>Tasks</h2>
+      <div id="tasksList" class="tasks-list"></div>
+    </section>
+  </div>
+
+  <!-- Add/Edit Task Modal -->
+  <div id="taskModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="modalTitle">Add New Task</h3>
+        <button class="close-btn" id="closeModal">&times;</button>
+      </div>
+      <form id="taskForm">
+        <div class="form-group">
+          <label>Task Title</label>
+          <input type="text" id="taskTitle" required>
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <textarea id="taskDescription" rows="3"></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Priority</label>
+            <select id="taskPriority">
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Status</label>
+            <select id="taskStatus">
+              <option value="todo">To Do</option>
+              <option value="in-progress">In Progress</option>
+              <option value="completed">Completed</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Due Date</label>
+          <input type="date" id="taskDueDate" required>
+        </div>
+        <div class="modal-actions">
+          <button type="submit" class="btn-primary">Save Task</button>
+          <button type="button" class="btn-secondary" id="cancelBtn">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

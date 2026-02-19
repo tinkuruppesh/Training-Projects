@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Test Stats</title>
+</head>
+<body>
+  <h2>Current Stats in localStorage:</h2>
+  <pre id="output"></pre>
+  <button onclick="clearAll()">Clear All Data</button>
+  
+  <script>
+    const stats = localStorage.getItem('pomodoroStats');
+    const sessionCount = localStorage.getItem('sessionCount');
+    const tasks = localStorage.getItem('pomodoroTasks');
+    
+    document.getElementById('output').textContent = 
+      'Stats: ' + stats + '\n' +
+      'Session Count: ' + sessionCount + '\n' +
+      'Tasks: ' + tasks;
+    
+    function clearAll() {
+      localStorage.removeItem('pomodoroStats');
+      localStorage.removeItem('sessionCount');
+      localStorage.removeItem('pomodoroTasks');
+      localStorage.removeItem('timerSettings');
+      alert('All data cleared! Refresh the page.');
+      location.reload();
+    }
+  </script>
+</body>
+</html>

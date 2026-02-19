@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projects – Kurakula Ruppesh</title>
+  <meta name="description" content="Projects by Kurakula Ruppesh – including MITSYantra Academic Dashboard." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👨‍💻</text></svg>" />
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<div id="loader"><div class="loader-inner"><div class="loader-ring"></div><div class="loader-text">KR</div></div></div>
+<div id="scroll-progress"></div>
+<div class="page-transition"></div>
+
+<nav class="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="nav-logo">Ruppesh<span>.</span></a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="projects.html" class="active">Projects</a>
+      <a href="resume.html">Resume</a>
+      <a href="contact.html" class="nav-cta">Contact</a>
+    </div>
+    <div class="hamburger"><span></span><span></span><span></span></div>
+  </div>
+</nav>
+<div class="menu-overlay"></div>
+<div class="mobile-menu">
+  <a href="index.html">🏠 Home</a>
+  <a href="about.html">👤 About</a>
+  <a href="projects.html" class="active">🚀 Projects</a>
+  <a href="resume.html">📄 Resume</a>
+  <a href="contact.html">✉️ Contact</a>
+</div>
+
+<!-- Hero -->
+<section class="projects-hero">
+  <div class="section-container">
+    <div class="section-header">
+      <span class="section-tag">My Work</span>
+      <h1 class="section-title">Projects &amp; <span>Builds</span></h1>
+      <div class="section-divider"></div>
+      <p class="section-subtitle" style="margin-top:16px;">Real-world projects that solve real problems. Built with passion, deployed with purpose.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Projects -->
+<section style="padding:60px 0 100px;">
+  <div class="section-container">
+    <div class="projects-grid">
+
+      <!-- MITSYantra Project Card -->
+      <div class="project-card reveal">
+        <div class="project-header">
+          <div class="project-icon">🎓</div>
+          <div class="project-meta">
+            <div class="project-name">MITSYantra – Academic Dashboard</div>
+            <div>
+              <span class="project-status">Active Development</span>
+              <span style="display:inline-block;font-size:0.75rem;font-weight:600;color:var(--text-light);background:var(--light-gray);padding:3px 10px;border-radius:100px;margin-left:8px;">Major Project</span>
+            </div>
+          </div>
+        </div>
+
+        <p class="project-desc">
+          MITSYantra is a comprehensive, web-based student management system built specifically for Madanapalle Institute of Technology &amp; Science. It centralizes all academic, administrative, and placement-related activities into a single, unified platform — eliminating information silos and streamlining communication across the institution.
+        </p>
+        <p class="project-desc">
+          The system replaces fragmented manual processes with automated, role-aware workflows. Whether it's a student checking their timetable, a faculty member posting attendance, or an admin managing placement drives — MITSYantra delivers the right information to the right person at the right time.
+        </p>
+
+        <!-- Architecture Overview -->
+        <div style="background:var(--off-white);border-radius:var(--radius-md);padding:24px;margin-bottom:24px;border:1px solid var(--gray);">
+          <h4 style="font-size:0.85rem;font-weight:700;color:var(--text-dark);margin-bottom:16px;text-transform:uppercase;letter-spacing:0.5px;">🏗️ System Architecture</h4>
+          <p style="font-size:0.88rem;color:var(--text-medium);line-height:1.8;">
+            Built on the <strong>MVC (Model-View-Controller)</strong> pattern using <strong>Java Servlets</strong> as the controller layer, <strong>JSP</strong> for dynamic views, and <strong>Oracle Database</strong> as the persistent data store. The application is deployed on <strong>Apache Tomcat 9</strong>, serving both desktop and mobile users through a responsive web UI. Role-based access control (RBAC) ensures each user type (Student, Faculty, Admin) sees only their relevant dashboards and actions.
+          </p>
+        </div>
+
+        <!-- Role-Based System -->
+        <div class="role-section reveal delay-1">
+          <h4>👥 Role-Based Dashboard System</h4>
+          <div class="role-badges">
+            <div>
+              <span class="role-badge role-student">🎓 Student</span>
+              <p style="font-size:0.78rem;color:var(--text-light);margin-top:6px;max-width:200px;">View timetable, attendance, grades, notifications, placement status</p>
+            </div>
+            <div>
+              <span class="role-badge role-faculty">👩‍🏫 Faculty</span>
+              <p style="font-size:0.78rem;color:var(--text-light);margin-top:6px;max-width:200px;">Mark attendance, upload materials, post announcements, manage events</p>
+            </div>
+            <div>
+              <span class="role-badge role-admin">🛡️ Admin</span>
+              <p style="font-size:0.78rem;color:var(--text-light);margin-top:6px;max-width:200px;">Manage users, view reports, configure placement drives, oversee all data</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Key Features -->
+        <div class="project-features reveal delay-2">
+          <h4>✅ Key Features</h4>
+          <div class="feature-list">
+            <div class="feature-item">Role-based authentication & dashboards</div>
+            <div class="feature-item">Dynamic timetable management</div>
+            <div class="feature-item">Real-time notifications & alerts</div>
+            <div class="feature-item">Attendance tracking & reports</div>
+            <div class="feature-item">College events calendar</div>
+            <div class="feature-item">Placement drive tracking</div>
+            <div class="feature-item">Faculty announcement board</div>
+            <div class="feature-item">Student academic records</div>
+            <div class="feature-item">Responsive web UI</div>
+            <div class="feature-item">Secure session management</div>
+          </div>
+        </div>
+
+        <!-- Tech Stack -->
+        <div class="tech-tags reveal delay-3">
+          <span class="tech-tag">Java Servlets</span>
+          <span class="tech-tag">JSP</span>
+          <span class="tech-tag">Apache Tomcat 9</span>
+          <span class="tech-tag">Oracle Database</span>
+          <span class="tech-tag">HTML5</span>
+          <span class="tech-tag">CSS3</span>
+          <span class="tech-tag">JavaScript</span>
+          <span class="tech-tag">JDBC</span>
+          <span class="tech-tag">MVC Pattern</span>
+          <span class="tech-tag">RBAC</span>
+        </div>
+
+        <!-- Actions -->
+        <div class="project-actions reveal delay-4">
+          <a href="#" class="btn-filled" onclick="alert('Live demo coming soon! Project under development.');return false;">🚀 View Live Demo</a>
+          <a href="#" class="btn-ghost" onclick="alert('GitHub repository will be linked soon!');return false;">⟨/⟩ GitHub Repo</a>
+        </div>
+      </div>
+
+      <!-- More Projects Placeholder -->
+      <div class="project-card reveal" style="background:var(--off-white);border:2px dashed var(--gray);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px;text-align:center;min-height:240px;">
+        <div style="font-size:2.5rem;margin-bottom:16px;">🔨</div>
+        <h3 style="font-family:var(--font-display);font-size:1.2rem;font-weight:700;margin-bottom:10px;color:var(--text-dark);">More Projects Coming Soon</h3>
+        <p style="font-size:0.9rem;color:var(--text-light);max-width:380px;line-height:1.7;margin-bottom:24px;">Currently working on exciting new projects. Stay tuned for more full-stack applications and open-source contributions.</p>
+        <a href="contact.html" class="btn-secondary">Have a Project Idea? Let's Talk →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Certifications Section -->
+<section style="background:var(--off-white);padding:80px 0;">
+  <div class="section-container">
+    <div class="section-header reveal">
+      <span class="section-tag">Certifications</span>
+      <h2 class="section-title">Courses &amp; <span>Certificates</span></h2>
+      <div class="section-divider"></div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;">
+      <div class="cert-card reveal delay-1">
+        <div class="cert-icon">🏆</div>
+        <div class="cert-name">Full Stack Development</div>
+        <div class="cert-issuer">Slash Mark IT Solutions</div>
+        <div style="margin-top:10px;font-size:0.78rem;color:var(--text-light);">Comprehensive full stack web development covering frontend, backend, databases, and deployment.</div>
+        <span style="display:inline-block;margin-top:12px;font-size:0.75rem;font-weight:700;color:var(--primary);background:rgba(255,107,53,0.08);padding:3px 10px;border-radius:100px;">Certified ✓</span>
+      </div>
+      <div class="cert-card reveal delay-2">
+        <div class="cert-icon">🎨</div>
+        <div class="cert-name">UI/UX Design Workshop</div>
+        <div class="cert-issuer">Workshop Certificate</div>
+        <div style="margin-top:10px;font-size:0.78rem;color:var(--text-light);">Hands-on design principles, prototyping, user research, and creating intuitive digital experiences.</div>
+        <span style="display:inline-block;margin-top:12px;font-size:0.75rem;font-weight:700;color:var(--primary);background:rgba(255,107,53,0.08);padding:3px 10px;border-radius:100px;">Completed ✓</span>
+      </div>
+      <div class="cert-card reveal delay-3">
+        <div class="cert-icon">⚡</div>
+        <div class="cert-name">CodeStorm</div>
+        <div class="cert-issuer">Competitive Hackathon</div>
+        <div style="margin-top:10px;font-size:0.78rem;color:var(--text-light);">Participated in an intensive competitive programming challenge testing algorithmic thinking and speed.</div>
+        <span style="display:inline-block;margin-top:12px;font-size:0.75rem;font-weight:700;color:var(--primary);background:rgba(255,107,53,0.08);padding:3px 10px;border-radius:100px;">Participated ✓</span>
+      </div>
+      <div class="cert-card reveal delay-4">
+        <div class="cert-icon">📊</div>
+        <div class="cert-name">Business Analytics with Excel</div>
+        <div class="cert-issuer">January 2026</div>
+        <div style="margin-top:10px;font-size:0.78rem;color:var(--text-light);">Skills in data analysis, data visualization, reporting, and data-driven decision-making using Microsoft Excel.</div>
+        <span style="display:inline-block;margin-top:12px;font-size:0.75rem;font-weight:700;color:var(--primary);background:rgba(255,107,53,0.08);padding:3px 10px;border-radius:100px;">Jan 2026 ✓</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="section-container">
+    <div class="footer-name">Ruppesh<span>.</span></div>
+    <p class="footer-tagline">Full Stack Developer · B.Tech CSE · MITS</p>
+    <div class="footer-links">
+      <a href="index.html">Home</a><a href="about.html">About</a><a href="projects.html">Projects</a><a href="resume.html">Resume</a><a href="contact.html">Contact</a>
+    </div>
+    <p class="footer-copy">© 2024 Kurakula Ruppesh. Crafted with ❤️ and lots of ☕</p>
+  </div>
+</footer>
+
+<button id="scroll-top">↑</button>
+<script src="script.js"></script>
+</body>
+</html>

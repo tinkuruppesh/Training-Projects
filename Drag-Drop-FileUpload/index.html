@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>File Upload Manager</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <h1>📁 File Upload Manager</h1>
+      <div class="stats">
+        <span>Total Files: <strong id="totalFiles">0</strong></span>
+        <span>Total Size: <strong id="totalSize">0 MB</strong></span>
+      </div>
+    </header>
+    
+    <!-- Drop Zone -->
+    <div class="drop-zone" id="dropZone">
+      <div class="drop-content">
+        <p class="drop-icon">📤</p>
+        <p class="drop-text">Drag & Drop your files here</p>
+        <p class="drop-or">or</p>
+        <label for="fileInput" class="file-btn">Browse Files</label>
+        <input type="file" id="fileInput" multiple hidden>
+        <p class="drop-info">Max file size: 5MB | Allowed: Images, PDF, Documents</p>
+      </div>
+    </div>
+
+    <!-- Message Area -->
+    <div id="message" class="message"></div>
+
+    <!-- Upload Queue -->
+    <div id="uploadQueue" class="upload-queue"></div>
+
+    <!-- Action Buttons -->
+    <div class="actions" id="actions" style="display:none;">
+      <button class="btn btn-primary" id="uploadBtn">Upload All Files</button>
+      <button class="btn btn-secondary" id="clearBtn">Clear All</button>
+    </div>
+
+    <!-- Uploaded Files Gallery -->
+    <div class="gallery-section" id="gallerySection" style="display:none;">
+      <div class="section-header">
+        <h2>📂 Uploaded Files</h2>
+        <button class="btn btn-danger" id="deleteAllBtn">Delete All</button>
+      </div>
+      <div id="gallery" class="gallery"></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

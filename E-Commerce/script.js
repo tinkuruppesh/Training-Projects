@@ -122,6 +122,7 @@ function goTo(page, data) {
     case 'wishlist': renderWishlist();     showPage('wishlist'); break;
     case 'tracking': renderTracking(data); showPage('tracking'); break;
     case 'success':  renderSuccess(data);  showPage('success');  break;
+    case 'profile':  renderProfile();      showPage('profile');  break;
     default:         renderHome();         showPage('home');
   }
 }
@@ -688,10 +689,15 @@ function renderProductCards(products) {
               <div class="stock-fill ${stockCls}" style="width:${stockPct}%"></div>
             </div>
           </div>
-          <button class="add-to-cart-btn" ${p.stock === 0 ? 'disabled' : ''} onclick="addToCart(event,${p.id})">
-            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-            ${p.stock === 0 ? 'Out of Stock' : inCart ? 'Add More' : 'Add to Cart'}
-          </button>
+          <div style="display:flex;gap:8px;">
+            <button class="add-to-cart-btn" ${p.stock === 0 ? 'disabled' : ''} onclick="addToCart(event,${p.id})" style="flex:1">
+              <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+              ${p.stock === 0 ? 'Out of Stock' : inCart ? 'Add More' : 'Add to Cart'}
+            </button>
+            <button class="book-order-btn" ${p.stock === 0 ? 'disabled' : ''} onclick="bookOrder(event,${p.id})" title="Book ${p.title}">
+              📋 Book
+            </button>
+          </div>
         </div>
       </div>`;
   }).join('');
@@ -797,6 +803,9 @@ function openProductModal(id) {
             <button class="btn-add-to-cart" id="mAtcBtn" onclick="addFromModal(${p.id})" ${p.stock===0?'disabled':''}>
               <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
               ${p.stock===0?'Out of Stock':'Add to Cart'}
+            </button>
+            <button class="btn-book-order" onclick="bookOrderFromModal(${p.id})" ${p.stock===0?'disabled':''}>
+              📋 Book ${p.title.slice(0,15)}${p.title.length>15?'...':''}
             </button>
             <button class="btn-modal-wishlist ${inWish?'active':''}" id="mWishBtn" onclick="toggleWishModal(${p.id})">
               <svg width="18" height="18" fill="${inWish?'currentColor':'none'}" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
@@ -998,7 +1007,7 @@ function renderCheckout() {
 
   document.getElementById('page-checkout').innerHTML = `
     <div class="content-wrap">
-      <div class="ck-layout">
+      <div class="checkout-layout">
         <div>
           <div class="checkout-title">Checkout</div>
 
@@ -1249,6 +1258,213 @@ function toggleWishById(id) {
   if (idx === -1) { wishlist.push(id); showToast('Added to wishlist ❤️', 'success'); }
   else            { wishlist.splice(idx, 1); showToast('Removed from wishlist', 'info'); }
   saveState(); updateBadges();
+}
+
+// ============================================================
+// PROFILE PAGE FOR BOOKING
+// ============================================================
+function renderProfile() {
+  if (!bookingProduct) { goTo('products'); return; }
+  
+  const p = bookingProduct.product;
+  const savedProfile = JSON.parse(localStorage.getItem('sw_profile') || 'null');
+  
+  document.getElementById('page-profile').innerHTML = `
+    <div class="content-wrap">
+      <div class="profile-page">
+        <div class="profile-header">
+          <button class="back-btn" onclick="bookingProduct=null;goTo('products')">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          </button>
+          <div>
+            <div class="profile-title">Complete Your Booking</div>
+            <div class="profile-sub">Booking: ${p.title}</div>
+          </div>
+        </div>
+
+        <div class="profile-layout">
+          <div>
+            <!-- Product Summary -->
+            <div class="booking-summary">
+              <div class="booking-summary-title">📋 Booking Details</div>
+              <div class="booking-product">
+                <img src="${p.images[0]}" alt="${p.title}" onerror="this.src='https://via.placeholder.com/100'">
+                <div>
+                  <div class="booking-product-name">${p.title}</div>
+                  <div class="booking-product-qty">Quantity: ${bookingProduct.qty}</div>
+                  <div class="booking-product-price">${fmt(p.price * bookingProduct.qty)}</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Address Form -->
+            <div class="form-section">
+              <div class="form-section-title"><span class="sec-icon">📍</span> Delivery Address</div>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label>Full Name *</label>
+                  <input type="text" id="prof-name" value="${savedProfile?.name || currentUser?.name || ''}" placeholder="Full Name">
+                  <div class="form-error" id="prof-name-err"></div>
+                </div>
+                <div class="form-group">
+                  <label>Phone Number *</label>
+                  <input type="tel" id="prof-phone" value="${savedProfile?.phone || ''}" placeholder="+91 9876543210">
+                  <div class="form-error" id="prof-phone-err"></div>
+                </div>
+                <div class="form-group form-full">
+                  <label>Street Address *</label>
+                  <input type="text" id="prof-addr" value="${savedProfile?.address || ''}" placeholder="House no., Street name, Area">
+                  <div class="form-error" id="prof-addr-err"></div>
+                </div>
+                <div class="form-group">
+                  <label>City *</label>
+                  <input type="text" id="prof-city" value="${savedProfile?.city || ''}" placeholder="City" list="cityList2">
+                  <datalist id="cityList2">${Object.keys(INDIA_CITIES).map(c=>`<option value="${c}">`).join('')}</datalist>
+                  <div class="form-error" id="prof-city-err"></div>
+                </div>
+                <div class="form-group">
+                  <label>State *</label>
+                  <select id="prof-state">
+                    <option value="">Select State</option>
+                    ${['Andhra Pradesh','Assam','Bihar','Delhi','Goa','Gujarat','Haryana','Karnataka','Kerala','Madhya Pradesh','Maharashtra','Odisha','Punjab','Rajasthan','Tamil Nadu','Telangana','Uttar Pradesh','West Bengal','Jharkhand','Himachal Pradesh'].map(s=>`<option value="${s}" ${savedProfile?.state===s?'selected':''}>${s}</option>`).join('')}
+                  </select>
+                  <div class="form-error" id="prof-state-err"></div>
+                </div>
+                <div class="form-group">
+                  <label>PIN Code *</label>
+                  <input type="text" id="prof-pin" value="${savedProfile?.pin || ''}" placeholder="6-digit PIN" maxlength="6">
+                  <div class="form-error" id="prof-pin-err"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Payment Method -->
+            <div class="form-section">
+              <div class="form-section-title"><span class="sec-icon">💳</span> Payment Method</div>
+              <div class="payment-options" id="profPmOpts">
+                <label class="payment-option ${!savedProfile?.payment || savedProfile?.payment==='cod'?'selected':''}"><input type="radio" name="profPm" value="cod" ${!savedProfile?.payment || savedProfile?.payment==='cod'?'checked':''}><span class="pm-icon">💵</span><div><div class="pm-label">Cash on Delivery</div><div class="pm-sub">Pay when you receive</div></div></label>
+                <label class="payment-option ${savedProfile?.payment==='upi'?'selected':''}"><input type="radio" name="profPm" value="upi" ${savedProfile?.payment==='upi'?'checked':''}><span class="pm-icon">📱</span><div><div class="pm-label">UPI / PhonePe / GPay</div><div class="pm-sub">Instant UPI payment</div></div></label>
+                <label class="payment-option ${savedProfile?.payment==='card'?'selected':''}"><input type="radio" name="profPm" value="card" ${savedProfile?.payment==='card'?'checked':''}><span class="pm-icon">💳</span><div><div class="pm-label">Credit / Debit Card</div><div class="pm-sub">Visa, Mastercard, RuPay</div></div></label>
+                <label class="payment-option ${savedProfile?.payment==='netbanking'?'selected':''}"><input type="radio" name="profPm" value="netbanking" ${savedProfile?.payment==='netbanking'?'checked':''}><span class="pm-icon">🏦</span><div><div class="pm-label">Net Banking</div><div class="pm-sub">All major banks</div></div></label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Order Summary Panel -->
+          <div class="order-summary-panel">
+            <div class="summary-title">Order Summary</div>
+            <div class="order-mini-item">
+              <img class="order-mini-img" src="${p.images[0]}" alt="${p.title}" onerror="this.src='https://via.placeholder.com/100'">
+              <div>
+                <div class="order-mini-name">${p.title.slice(0,28)}${p.title.length>28?'...':''}</div>
+                <div class="order-mini-qty">Qty: ${bookingProduct.qty}</div>
+              </div>
+              <div class="order-mini-price">${fmt(p.price * bookingProduct.qty)}</div>
+            </div>
+            <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border);">
+              <div class="summary-row"><span class="label">Subtotal</span><span>${fmt(p.price * bookingProduct.qty)}</span></div>
+              <div class="summary-row"><span class="label">Shipping</span><span>${p.price * bookingProduct.qty > 999 ? 'FREE' : fmt(99)}</span></div>
+              <div class="summary-row"><span class="label">Tax (18%)</span><span>${fmt(Math.round(p.price * bookingProduct.qty * 0.18))}</span></div>
+              <div class="summary-row total-row"><span>Total</span><span>${fmt(p.price * bookingProduct.qty + (p.price * bookingProduct.qty > 999 ? 0 : 99) + Math.round(p.price * bookingProduct.qty * 0.18))}</span></div>
+            </div>
+            <button class="place-order-btn" onclick="confirmBooking()">
+              Confirm Booking
+              <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>`;
+
+  document.querySelectorAll('#profPmOpts input[type="radio"]').forEach(r => {
+    r.addEventListener('change', () => {
+      document.querySelectorAll('#profPmOpts .payment-option').forEach(o => o.classList.remove('selected'));
+      r.closest('.payment-option').classList.add('selected');
+    });
+  });
+}
+
+function confirmBooking() {
+  const name = val('prof-name'), phone = val('prof-phone'), addr = val('prof-addr');
+  const city = val('prof-city'), state = val('prof-state'), pin = val('prof-pin');
+  const pm = document.querySelector('#profPmOpts input[name="profPm"]:checked')?.value || 'cod';
+  
+  let ok = true;
+  if (!name) { showErr('prof-name-err', 'Full name is required'); ok = false; } else hideErr('prof-name-err');
+  if (!phone || phone.replace(/\D/g,'').length < 10) { showErr('prof-phone-err','Enter a valid 10-digit number'); ok = false; } else hideErr('prof-phone-err');
+  if (!addr) { showErr('prof-addr-err', 'Address is required'); ok = false; } else hideErr('prof-addr-err');
+  if (!city) { showErr('prof-city-err', 'City is required'); ok = false; } else hideErr('prof-city-err');
+  if (!state) { showErr('prof-state-err', 'Please select a state'); ok = false; } else hideErr('prof-state-err');
+  if (!pin || pin.length !== 6 || isNaN(pin)) { showErr('prof-pin-err','Enter a valid 6-digit PIN'); ok = false; } else hideErr('prof-pin-err');
+  if (!ok) return;
+
+  // Save profile
+  localStorage.setItem('sw_profile', JSON.stringify({ name, phone, address: addr, city, state, pin, payment: pm }));
+
+  // Show confirmation modal
+  const p = bookingProduct.product;
+  const sub = p.price * bookingProduct.qty;
+  const ship = sub > 999 ? 0 : 99;
+  const tax = Math.round(sub * 0.18);
+  const tot = sub + ship + tax;
+
+  const modal = document.createElement('div');
+  modal.className = 'modal-overlay show';
+  modal.innerHTML = `
+    <div class="modal-box" style="max-width:500px;">
+      <div style="padding:32px;text-align:center;">
+        <div style="font-size:48px;margin-bottom:16px;">❓</div>
+        <div style="font-size:20px;font-weight:700;margin-bottom:8px;">Confirm Your Booking</div>
+        <div style="color:var(--text-light);margin-bottom:20px;">Are you sure you want to book this order?</div>
+        <div style="background:var(--bg3);padding:16px;border-radius:12px;margin-bottom:20px;text-align:left;">
+          <div style="font-weight:700;margin-bottom:8px;">${p.title}</div>
+          <div style="font-size:14px;color:var(--text-mid);">Qty: ${bookingProduct.qty} | Total: ${fmt(tot)}</div>
+          <div style="font-size:13px;color:var(--text-light);margin-top:4px;">📍 ${city}, ${state}</div>
+          <div style="font-size:13px;color:var(--text-light);">💳 ${pm.toUpperCase()}</div>
+        </div>
+        <div style="display:flex;gap:10px;">
+          <button class="btn-outline" style="flex:1;" onclick="this.closest('.modal-overlay').remove()">Cancel</button>
+          <button class="btn-solid" style="flex:1;" onclick="placeBooking()">Confirm</button>
+        </div>
+      </div>
+    </div>`;
+  document.body.appendChild(modal);
+}
+
+function placeBooking() {
+  const profile = JSON.parse(localStorage.getItem('sw_profile'));
+  const p = bookingProduct.product;
+  const sub = p.price * bookingProduct.qty;
+  const ship = sub > 999 ? 0 : 99;
+  const tax = Math.round(sub * 0.18);
+  const tot = sub + ship + tax;
+
+  const cityKey = Object.keys(INDIA_CITIES).find(k => k.toLowerCase() === profile.city.toLowerCase()) || 'Delhi';
+  const destCoords = INDIA_CITIES[cityKey] || INDIA_CITIES['Delhi'];
+
+  const order = {
+    id: 'SWO' + Date.now(),
+    date: new Date().toLocaleDateString('en-IN', { day:'2-digit', month:'short', year:'numeric' }),
+    ts: Date.now(),
+    items: [{ id: bookingProduct.id, qty: bookingProduct.qty, price: p.price }],
+    address: profile,
+    payment: profile.payment,
+    sub, ship, tax, discount: 0, total: tot,
+    status: 'Processing',
+    coupon: null,
+    origin: { city: 'Mumbai', ...INDIA_CITIES.Mumbai },
+    destination: { city: cityKey, ...destCoords }
+  };
+
+  orders.unshift(order);
+  p.stock = Math.max(0, p.stock - bookingProduct.qty);
+  saveState();
+  
+  document.querySelector('.modal-overlay')?.remove();
+  bookingProduct = null;
+  
+  goTo('tracking', order.id);
+  showToast('✅ Booking confirmed! Track your order.', 'success');
 }
 
 // ============================================================
@@ -1612,6 +1828,29 @@ function addRipple(e) {
 
 // Keyboard shortcuts
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+// ============================================================
+// BOOK ORDER FUNCTIONALITY
+// ============================================================
+let bookingProduct = null;
+
+function bookOrder(e, id) {
+  e.stopPropagation();
+  const p = PRODUCTS.find(x => x.id === id);
+  if (!p || p.stock === 0) return;
+  
+  bookingProduct = { id, qty: 1, product: p };
+  goTo('profile');
+}
+
+function bookOrderFromModal(id) {
+  const p = PRODUCTS.find(x => x.id === id);
+  if (!p || p.stock === 0) return;
+  
+  bookingProduct = { id, qty: modalQtyValue, product: p };
+  closeModal();
+  goTo('profile');
+}
 
 // Intersection observer for scroll animations
 const ioObserver = new IntersectionObserver(entries => {

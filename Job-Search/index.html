@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Search</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>💼 Job Search</h1>
+      <p class="subtitle">Find your dream job today</p>
+    </header>
+
+    <main>
+      <!-- Search Section -->
+      <section class="search-section">
+        <div class="search-bar">
+          <input type="text" id="searchInput" placeholder="Search jobs by title or keyword (e.g., Developer, Designer)">
+          <button id="searchBtn">Search</button>
+        </div>
+
+        <!-- Recent Searches -->
+        <div id="recentSearches" class="recent-searches"></div>
+
+        <!-- Filters -->
+        <div class="filters">
+          <select id="locationFilter">
+            <option value="">All Locations</option>
+            <option value="remote">Remote</option>
+            <option value="new york">New York</option>
+            <option value="san francisco">San Francisco</option>
+            <option value="london">London</option>
+            <option value="berlin">Berlin</option>
+          </select>
+
+          <select id="typeFilter">
+            <option value="">All Types</option>
+            <option value="full time">Full Time</option>
+            <option value="part time">Part Time</option>
+            <option value="contract">Contract</option>
+            <option value="internship">Internship</option>
+          </select>
+
+          <select id="sortFilter">
+            <option value="date">Latest</option>
+            <option value="relevance">Relevance</option>
+          </select>
+
+          <button id="clearFilters">Clear Filters</button>
+        </div>
+      </section>
+
+      <!-- Results Info -->
+      <section class="results-info">
+        <p id="resultsCount">Search for jobs to see results</p>
+      </section>
+
+      <!-- Loading Spinner -->
+      <div id="loading" class="loading" style="display:none;">
+        <div class="spinner"></div>
+        <p>Loading jobs...</p>
+      </div>
+
+      <!-- Jobs List -->
+      <section id="jobsList" class="jobs-list"></section>
+
+      <!-- Load More -->
+      <div id="loadMoreContainer" class="load-more-container" style="display:none;">
+        <button id="loadMoreBtn">Load More Jobs</button>
+      </div>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
